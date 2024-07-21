@@ -1,0 +1,5805 @@
+1
+00:00:00,000 --> 00:00:02,030
+
+in this video we are going to data my
+
+2
+00:00:02,030 --> 00:00:02,040
+in this video we are going to data my
+ 
+
+3
+00:00:02,040 --> 00:00:04,130
+in this video we are going to data my
+novel chart patterns with python I'll
+
+4
+00:00:04,130 --> 00:00:04,140
+novel chart patterns with python I'll
+ 
+
+5
+00:00:04,140 --> 00:00:05,510
+novel chart patterns with python I'll
+outline an approach to find High
+
+6
+00:00:05,510 --> 00:00:05,520
+outline an approach to find High
+ 
+
+7
+00:00:05,520 --> 00:00:07,130
+outline an approach to find High
+performing patterns in the price
+
+8
+00:00:07,130 --> 00:00:07,140
+performing patterns in the price
+ 
+
+9
+00:00:07,140 --> 00:00:09,350
+performing patterns in the price
+structure on any Market the
+
+10
+00:00:09,350 --> 00:00:09,360
+structure on any Market the
+ 
+
+11
+00:00:09,360 --> 00:00:11,450
+structure on any Market the
+visualization you are seeing now is the
+
+12
+00:00:11,450 --> 00:00:11,460
+visualization you are seeing now is the
+ 
+
+13
+00:00:11,460 --> 00:00:13,310
+visualization you are seeing now is the
+current price structure pattern drawn in
+
+14
+00:00:13,310 --> 00:00:13,320
+current price structure pattern drawn in
+ 
+
+15
+00:00:13,320 --> 00:00:15,410
+current price structure pattern drawn in
+white we will save and normalize each of
+
+16
+00:00:15,410 --> 00:00:15,420
+white we will save and normalize each of
+ 
+
+17
+00:00:15,420 --> 00:00:17,090
+white we will save and normalize each of
+these shapes then group them into
+
+18
+00:00:17,090 --> 00:00:17,100
+these shapes then group them into
+ 
+
+19
+00:00:17,100 --> 00:00:19,370
+these shapes then group them into
+clusters to find recurring patterns in
+
+20
+00:00:19,370 --> 00:00:19,380
+clusters to find recurring patterns in
+ 
+
+21
+00:00:19,380 --> 00:00:21,410
+clusters to find recurring patterns in
+price structure we will assess the
+
+22
+00:00:21,410 --> 00:00:21,420
+price structure we will assess the
+ 
+
+23
+00:00:21,420 --> 00:00:22,970
+price structure we will assess the
+future behavior of the market after
+
+24
+00:00:22,970 --> 00:00:22,980
+future behavior of the market after
+ 
+
+25
+00:00:22,980 --> 00:00:24,769
+future behavior of the market after
+these price structure patterns manifest
+
+26
+00:00:24,769 --> 00:00:24,779
+these price structure patterns manifest
+ 
+
+27
+00:00:24,779 --> 00:00:27,290
+these price structure patterns manifest
+to find profitable patterns if you like
+
+28
+00:00:27,290 --> 00:00:27,300
+to find profitable patterns if you like
+ 
+
+29
+00:00:27,300 --> 00:00:28,790
+to find profitable patterns if you like
+more advanced algorithmic trading
+
+30
+00:00:28,790 --> 00:00:28,800
+more advanced algorithmic trading
+ 
+
+31
+00:00:28,800 --> 00:00:30,769
+more advanced algorithmic trading
+content like this consider subscribing
+
+32
+00:00:30,769 --> 00:00:30,779
+content like this consider subscribing
+ 
+
+33
+00:00:30,779 --> 00:00:32,569
+content like this consider subscribing
+there are three main steps in this
+
+34
+00:00:32,569 --> 00:00:32,579
+there are three main steps in this
+ 
+
+35
+00:00:32,579 --> 00:00:34,610
+there are three main steps in this
+approach first we build a data set of
+
+36
+00:00:34,610 --> 00:00:34,620
+approach first we build a data set of
+ 
+
+37
+00:00:34,620 --> 00:00:36,889
+approach first we build a data set of
+price shapes then we cluster the data
+
+38
+00:00:36,889 --> 00:00:36,899
+price shapes then we cluster the data
+ 
+
+39
+00:00:36,899 --> 00:00:38,810
+price shapes then we cluster the data
+set into groups of similar patterns then
+
+40
+00:00:38,810 --> 00:00:38,820
+set into groups of similar patterns then
+ 
+
+41
+00:00:38,820 --> 00:00:40,850
+set into groups of similar patterns then
+we assess and select the best patterns
+
+42
+00:00:40,850 --> 00:00:40,860
+we assess and select the best patterns
+ 
+
+43
+00:00:40,860 --> 00:00:42,830
+we assess and select the best patterns
+that tend to proceed a move in the price
+
+44
+00:00:42,830 --> 00:00:42,840
+that tend to proceed a move in the price
+ 
+
+45
+00:00:42,840 --> 00:00:45,350
+that tend to proceed a move in the price
+first we need to build our data set in
+
+46
+00:00:45,350 --> 00:00:45,360
+first we need to build our data set in
+ 
+
+47
+00:00:45,360 --> 00:00:47,030
+first we need to build our data set in
+this example we are finding five
+
+48
+00:00:47,030 --> 00:00:47,040
+this example we are finding five
+ 
+
+49
+00:00:47,040 --> 00:00:48,889
+this example we are finding five
+perceptually important points on the
+
+50
+00:00:48,889 --> 00:00:48,899
+perceptually important points on the
+ 
+
+51
+00:00:48,899 --> 00:00:51,350
+perceptually important points on the
+recent 24 candles of data if you are
+
+52
+00:00:51,350 --> 00:00:51,360
+recent 24 candles of data if you are
+ 
+
+53
+00:00:51,360 --> 00:00:52,610
+recent 24 candles of data if you are
+unfamiliar with the perceptually
+
+54
+00:00:52,610 --> 00:00:52,620
+unfamiliar with the perceptually
+ 
+
+55
+00:00:52,620 --> 00:00:54,950
+unfamiliar with the perceptually
+important Point algorithm I covered in
+
+56
+00:00:54,950 --> 00:00:54,960
+important Point algorithm I covered in
+ 
+
+57
+00:00:54,960 --> 00:00:56,810
+important Point algorithm I covered in
+detail in my chart pattern algorithms
+
+58
+00:00:56,810 --> 00:00:56,820
+detail in my chart pattern algorithms
+ 
+
+59
+00:00:56,820 --> 00:00:59,209
+detail in my chart pattern algorithms
+video linked in the corner but quickly
+
+60
+00:00:59,209 --> 00:00:59,219
+video linked in the corner but quickly
+ 
+
+61
+00:00:59,219 --> 00:01:00,529
+video linked in the corner but quickly
+the perceptually import important Point
+
+62
+00:01:00,529 --> 00:01:00,539
+the perceptually import important Point
+ 
+
+63
+00:01:00,539 --> 00:01:02,389
+the perceptually import important Point
+algorithm always selects the first and
+
+64
+00:01:02,389 --> 00:01:02,399
+algorithm always selects the first and
+ 
+
+65
+00:01:02,399 --> 00:01:04,609
+algorithm always selects the first and
+last points on a section of data then
+
+66
+00:01:04,609 --> 00:01:04,619
+last points on a section of data then
+ 
+
+67
+00:01:04,619 --> 00:01:07,130
+last points on a section of data then
+selects additional internal points by
+
+68
+00:01:07,130 --> 00:01:07,140
+selects additional internal points by
+ 
+
+69
+00:01:07,140 --> 00:01:08,990
+selects additional internal points by
+finding the points with the maximum
+
+70
+00:01:08,990 --> 00:01:09,000
+finding the points with the maximum
+ 
+
+71
+00:01:09,000 --> 00:01:11,030
+finding the points with the maximum
+distance from two adjacent selected
+
+72
+00:01:11,030 --> 00:01:11,040
+distance from two adjacent selected
+ 
+
+73
+00:01:11,040 --> 00:01:13,070
+distance from two adjacent selected
+points I drew lines between the Five
+
+74
+00:01:13,070 --> 00:01:13,080
+points I drew lines between the Five
+ 
+
+75
+00:01:13,080 --> 00:01:14,690
+points I drew lines between the Five
+Points to make it a little easier to see
+
+76
+00:01:14,690 --> 00:01:14,700
+Points to make it a little easier to see
+ 
+
+77
+00:01:14,700 --> 00:01:17,270
+Points to make it a little easier to see
+but these Five Points serve as a summary
+
+78
+00:01:17,270 --> 00:01:17,280
+but these Five Points serve as a summary
+ 
+
+79
+00:01:17,280 --> 00:01:19,370
+but these Five Points serve as a summary
+of The Price action over the last 24
+
+80
+00:01:19,370 --> 00:01:19,380
+of The Price action over the last 24
+ 
+
+81
+00:01:19,380 --> 00:01:21,649
+of The Price action over the last 24
+candles of data this reduces
+
+82
+00:01:21,649 --> 00:01:21,659
+candles of data this reduces
+ 
+
+83
+00:01:21,659 --> 00:01:23,450
+candles of data this reduces
+dimensionality which makes it much
+
+84
+00:01:23,450 --> 00:01:23,460
+dimensionality which makes it much
+ 
+
+85
+00:01:23,460 --> 00:01:25,609
+dimensionality which makes it much
+easier and faster for clustering
+
+86
+00:01:25,609 --> 00:01:25,619
+easier and faster for clustering
+ 
+
+87
+00:01:25,619 --> 00:01:27,649
+easier and faster for clustering
+algorithms or other algorithms to
+
+88
+00:01:27,649 --> 00:01:27,659
+algorithms or other algorithms to
+ 
+
+89
+00:01:27,659 --> 00:01:29,630
+algorithms or other algorithms to
+process we compute the perceptually
+
+90
+00:01:29,630 --> 00:01:29,640
+process we compute the perceptually
+ 
+
+91
+00:01:29,640 --> 00:01:31,850
+process we compute the perceptually
+important points for each subsequence of
+
+92
+00:01:31,850 --> 00:01:31,860
+important points for each subsequence of
+ 
+
+93
+00:01:31,860 --> 00:01:34,010
+important points for each subsequence of
+24 candles across the entire data set
+
+94
+00:01:34,010 --> 00:01:34,020
+24 candles across the entire data set
+ 
+
+95
+00:01:34,020 --> 00:01:36,170
+24 candles across the entire data set
+and record them we will cluster these
+
+96
+00:01:36,170 --> 00:01:36,180
+and record them we will cluster these
+ 
+
+97
+00:01:36,180 --> 00:01:38,990
+and record them we will cluster these
+subsequences to find similar groups this
+
+98
+00:01:38,990 --> 00:01:39,000
+subsequences to find similar groups this
+ 
+
+99
+00:01:39,000 --> 00:01:41,270
+subsequences to find similar groups this
+idea originated in 2001 with the
+
+100
+00:01:41,270 --> 00:01:41,280
+idea originated in 2001 with the
+ 
+
+101
+00:01:41,280 --> 00:01:43,550
+idea originated in 2001 with the
+publication of this paper you may have
+
+102
+00:01:43,550 --> 00:01:43,560
+publication of this paper you may have
+ 
+
+103
+00:01:43,560 --> 00:01:45,289
+publication of this paper you may have
+noticed earlier but as this
+
+104
+00:01:45,289 --> 00:01:45,299
+noticed earlier but as this
+ 
+
+105
+00:01:45,299 --> 00:01:47,030
+noticed earlier but as this
+visualization runs the pattern shape
+
+106
+00:01:47,030 --> 00:01:47,040
+visualization runs the pattern shape
+ 
+
+107
+00:01:47,040 --> 00:01:49,130
+visualization runs the pattern shape
+does not update with each new candle
+
+108
+00:01:49,130 --> 00:01:49,140
+does not update with each new candle
+ 
+
+109
+00:01:49,140 --> 00:01:51,170
+does not update with each new candle
+there's an important reason for this in
+
+110
+00:01:51,170 --> 00:01:51,180
+there's an important reason for this in
+ 
+
+111
+00:01:51,180 --> 00:01:53,330
+there's an important reason for this in
+2003 this paper was published that
+
+112
+00:01:53,330 --> 00:01:53,340
+2003 this paper was published that
+ 
+
+113
+00:01:53,340 --> 00:01:55,850
+2003 this paper was published that
+critiqued the 2001 paper it claimed
+
+114
+00:01:55,850 --> 00:01:55,860
+critiqued the 2001 paper it claimed
+ 
+
+115
+00:01:55,860 --> 00:01:57,590
+critiqued the 2001 paper it claimed
+subsequence clusters are meaningless
+
+116
+00:01:57,590 --> 00:01:57,600
+subsequence clusters are meaningless
+ 
+
+117
+00:01:57,600 --> 00:02:00,649
+subsequence clusters are meaningless
+this paper goes into great detail and it
+
+118
+00:02:00,649 --> 00:02:00,659
+this paper goes into great detail and it
+ 
+
+119
+00:02:00,659 --> 00:02:02,330
+this paper goes into great detail and it
+is worth reading if you're interested in
+
+120
+00:02:02,330 --> 00:02:02,340
+is worth reading if you're interested in
+ 
+
+121
+00:02:02,340 --> 00:02:04,550
+is worth reading if you're interested in
+pattern Discovery for trading but in
+
+122
+00:02:04,550 --> 00:02:04,560
+pattern Discovery for trading but in
+ 
+
+123
+00:02:04,560 --> 00:02:06,590
+pattern Discovery for trading but in
+short adjacent subsequences are not
+
+124
+00:02:06,590 --> 00:02:06,600
+short adjacent subsequences are not
+ 
+
+125
+00:02:06,600 --> 00:02:08,570
+short adjacent subsequences are not
+unique they have considerable overlap
+
+126
+00:02:08,570 --> 00:02:08,580
+unique they have considerable overlap
+ 
+
+127
+00:02:08,580 --> 00:02:11,390
+unique they have considerable overlap
+this overlap causes trivial matches and
+
+128
+00:02:11,390 --> 00:02:11,400
+this overlap causes trivial matches and
+ 
+
+129
+00:02:11,400 --> 00:02:13,010
+this overlap causes trivial matches and
+causes the patterns found to be
+
+130
+00:02:13,010 --> 00:02:13,020
+causes the patterns found to be
+ 
+
+131
+00:02:13,020 --> 00:02:15,470
+causes the patterns found to be
+essentially random the authors of the
+
+132
+00:02:15,470 --> 00:02:15,480
+essentially random the authors of the
+ 
+
+133
+00:02:15,480 --> 00:02:17,330
+essentially random the authors of the
+2001 paper made an update to their
+
+134
+00:02:17,330 --> 00:02:17,340
+2001 paper made an update to their
+ 
+
+135
+00:02:17,340 --> 00:02:18,949
+2001 paper made an update to their
+method to prevent meaningless pattern
+
+136
+00:02:18,949 --> 00:02:18,959
+method to prevent meaningless pattern
+ 
+
+137
+00:02:18,959 --> 00:02:21,650
+method to prevent meaningless pattern
+Discovery in this 2005 paper this
+
+138
+00:02:21,650 --> 00:02:21,660
+Discovery in this 2005 paper this
+ 
+
+139
+00:02:21,660 --> 00:02:24,110
+Discovery in this 2005 paper this
+updated method is the one we will use we
+
+140
+00:02:24,110 --> 00:02:24,120
+updated method is the one we will use we
+ 
+
+141
+00:02:24,120 --> 00:02:25,490
+updated method is the one we will use we
+compute the perceptually important
+
+142
+00:02:25,490 --> 00:02:25,500
+compute the perceptually important
+ 
+
+143
+00:02:25,500 --> 00:02:27,290
+compute the perceptually important
+points with a sliding window on the
+
+144
+00:02:27,290 --> 00:02:27,300
+points with a sliding window on the
+ 
+
+145
+00:02:27,300 --> 00:02:29,630
+points with a sliding window on the
+recent 24 candles but only included in
+
+146
+00:02:29,630 --> 00:02:29,640
+recent 24 candles but only included in
+ 
+
+147
+00:02:29,640 --> 00:02:31,010
+recent 24 candles but only included in
+the data set at the internal
+
+148
+00:02:31,010 --> 00:02:31,020
+the data set at the internal
+ 
+
+149
+00:02:31,020 --> 00:02:32,449
+the data set at the internal
+perceptually important points are
+
+150
+00:02:32,449 --> 00:02:32,459
+perceptually important points are
+ 
+
+151
+00:02:32,459 --> 00:02:34,490
+perceptually important points are
+different from the last subsequence this
+
+152
+00:02:34,490 --> 00:02:34,500
+different from the last subsequence this
+ 
+
+153
+00:02:34,500 --> 00:02:36,410
+different from the last subsequence this
+change causes each subsequence to be
+
+154
+00:02:36,410 --> 00:02:36,420
+change causes each subsequence to be
+ 
+
+155
+00:02:36,420 --> 00:02:37,850
+change causes each subsequence to be
+more unique and avoid trivial
+
+156
+00:02:37,850 --> 00:02:37,860
+more unique and avoid trivial
+ 
+
+157
+00:02:37,860 --> 00:02:40,309
+more unique and avoid trivial
+meaningless clusterings it also reduces
+
+158
+00:02:40,309 --> 00:02:40,319
+meaningless clusterings it also reduces
+ 
+
+159
+00:02:40,319 --> 00:02:42,110
+meaningless clusterings it also reduces
+the total amount of subsequences to
+
+160
+00:02:42,110 --> 00:02:42,120
+the total amount of subsequences to
+ 
+
+161
+00:02:42,120 --> 00:02:43,850
+the total amount of subsequences to
+Cluster which reduces the processing
+
+162
+00:02:43,850 --> 00:02:43,860
+Cluster which reduces the processing
+ 
+
+163
+00:02:43,860 --> 00:02:46,250
+Cluster which reduces the processing
+time an added bonus let's look at the
+
+164
+00:02:46,250 --> 00:02:46,260
+time an added bonus let's look at the
+ 
+
+165
+00:02:46,260 --> 00:02:47,390
+time an added bonus let's look at the
+code for this
+
+166
+00:02:47,390 --> 00:02:47,400
+code for this
+ 
+
+167
+00:02:47,400 --> 00:02:49,369
+code for this
+the code for the entire data mining
+
+168
+00:02:49,369 --> 00:02:49,379
+the code for the entire data mining
+ 
+
+169
+00:02:49,379 --> 00:02:51,890
+the code for the entire data mining
+process is managed by a class pip
+
+170
+00:02:51,890 --> 00:02:51,900
+process is managed by a class pip
+ 
+
+171
+00:02:51,900 --> 00:02:54,530
+process is managed by a class pip
+pattern Miner we first load in some data
+
+172
+00:02:54,530 --> 00:02:54,540
+pattern Miner we first load in some data
+ 
+
+173
+00:02:54,540 --> 00:02:57,229
+pattern Miner we first load in some data
+from a CSV we convert the prices to
+
+174
+00:02:57,229 --> 00:02:57,239
+from a CSV we convert the prices to
+ 
+
+175
+00:02:57,239 --> 00:02:59,570
+from a CSV we convert the prices to
+logarithmic prices the class assumes
+
+176
+00:02:59,570 --> 00:02:59,580
+logarithmic prices the class assumes
+ 
+
+177
+00:02:59,580 --> 00:03:01,490
+logarithmic prices the class assumes
+that the prices are logarithmic so this
+
+178
+00:03:01,490 --> 00:03:01,500
+that the prices are logarithmic so this
+ 
+
+179
+00:03:01,500 --> 00:03:03,949
+that the prices are logarithmic so this
+must be done we get the closing price as
+
+180
+00:03:03,949 --> 00:03:03,959
+must be done we get the closing price as
+ 
+
+181
+00:03:03,959 --> 00:03:05,930
+must be done we get the closing price as
+an array then we create an instance of
+
+182
+00:03:05,930 --> 00:03:05,940
+an array then we create an instance of
+ 
+
+183
+00:03:05,940 --> 00:03:08,330
+an array then we create an instance of
+the class it has three parameters the
+
+184
+00:03:08,330 --> 00:03:08,340
+the class it has three parameters the
+ 
+
+185
+00:03:08,340 --> 00:03:10,009
+the class it has three parameters the
+number of perceptually important points
+
+186
+00:03:10,009 --> 00:03:10,019
+number of perceptually important points
+ 
+
+187
+00:03:10,019 --> 00:03:11,990
+number of perceptually important points
+the look back which is the number of
+
+188
+00:03:11,990 --> 00:03:12,000
+the look back which is the number of
+ 
+
+189
+00:03:12,000 --> 00:03:14,270
+the look back which is the number of
+candles the Pips will be found on and
+
+190
+00:03:14,270 --> 00:03:14,280
+candles the Pips will be found on and
+ 
+
+191
+00:03:14,280 --> 00:03:16,309
+candles the Pips will be found on and
+the hold period the hold period will be
+
+192
+00:03:16,309 --> 00:03:16,319
+the hold period the hold period will be
+ 
+
+193
+00:03:16,319 --> 00:03:18,290
+the hold period the hold period will be
+discussed more later but it is how many
+
+194
+00:03:18,290 --> 00:03:18,300
+discussed more later but it is how many
+ 
+
+195
+00:03:18,300 --> 00:03:20,270
+discussed more later but it is how many
+candles a position will be held after a
+
+196
+00:03:20,270 --> 00:03:20,280
+candles a position will be held after a
+ 
+
+197
+00:03:20,280 --> 00:03:22,430
+candles a position will be held after a
+selected pattern is found we pass our
+
+198
+00:03:22,430 --> 00:03:22,440
+selected pattern is found we pass our
+ 
+
+199
+00:03:22,440 --> 00:03:24,470
+selected pattern is found we pass our
+closing price array to the classes train
+
+200
+00:03:24,470 --> 00:03:24,480
+closing price array to the classes train
+ 
+
+201
+00:03:24,480 --> 00:03:26,750
+closing price array to the classes train
+function the n-wraps parameter will be
+
+202
+00:03:26,750 --> 00:03:26,760
+function the n-wraps parameter will be
+ 
+
+203
+00:03:26,760 --> 00:03:28,910
+function the n-wraps parameter will be
+discussed later here is the init
+
+204
+00:03:28,910 --> 00:03:28,920
+discussed later here is the init
+ 
+
+205
+00:03:28,920 --> 00:03:31,369
+discussed later here is the init
+function of the class it doesn't do
+
+206
+00:03:31,369 --> 00:03:31,379
+function of the class it doesn't do
+ 
+
+207
+00:03:31,379 --> 00:03:33,530
+function of the class it doesn't do
+anything but declare variables the main
+
+208
+00:03:33,530 --> 00:03:33,540
+anything but declare variables the main
+ 
+
+209
+00:03:33,540 --> 00:03:35,390
+anything but declare variables the main
+thing of note for now is the input
+
+210
+00:03:35,390 --> 00:03:35,400
+thing of note for now is the input
+ 
+
+211
+00:03:35,400 --> 00:03:37,250
+thing of note for now is the input
+parameters are saved in these values
+
+212
+00:03:37,250 --> 00:03:37,260
+parameters are saved in these values
+ 
+
+213
+00:03:37,260 --> 00:03:40,250
+parameters are saved in these values
+here is the train function we save the
+
+214
+00:03:40,250 --> 00:03:40,260
+here is the train function we save the
+ 
+
+215
+00:03:40,260 --> 00:03:42,410
+here is the train function we save the
+closing price array as data in the class
+
+216
+00:03:42,410 --> 00:03:42,420
+closing price array as data in the class
+ 
+
+217
+00:03:42,420 --> 00:03:44,390
+closing price array as data in the class
+then we call this function find unique
+
+218
+00:03:44,390 --> 00:03:44,400
+then we call this function find unique
+ 
+
+219
+00:03:44,400 --> 00:03:46,670
+then we call this function find unique
+patterns this function handles the
+
+220
+00:03:46,670 --> 00:03:46,680
+patterns this function handles the
+ 
+
+221
+00:03:46,680 --> 00:03:48,530
+patterns this function handles the
+creation of the unique pit patterns
+
+222
+00:03:48,530 --> 00:03:48,540
+creation of the unique pit patterns
+ 
+
+223
+00:03:48,540 --> 00:03:51,050
+creation of the unique pit patterns
+which we will cluster later we will keep
+
+224
+00:03:51,050 --> 00:03:51,060
+which we will cluster later we will keep
+ 
+
+225
+00:03:51,060 --> 00:03:52,850
+which we will cluster later we will keep
+track of the coordinates of the last
+
+226
+00:03:52,850 --> 00:03:52,860
+track of the coordinates of the last
+ 
+
+227
+00:03:52,860 --> 00:03:55,490
+track of the coordinates of the last
+subsequence in this list we Loop through
+
+228
+00:03:55,490 --> 00:03:55,500
+subsequence in this list we Loop through
+ 
+
+229
+00:03:55,500 --> 00:03:57,830
+subsequence in this list we Loop through
+each candle in the data set we find the
+
+230
+00:03:57,830 --> 00:03:57,840
+each candle in the data set we find the
+ 
+
+231
+00:03:57,840 --> 00:03:59,570
+each candle in the data set we find the
+most recent section of the data and
+
+232
+00:03:59,570 --> 00:03:59,580
+most recent section of the data and
+ 
+
+233
+00:03:59,580 --> 00:04:01,910
+most recent section of the data and
+store it in this variable window when we
+
+234
+00:04:01,910 --> 00:04:01,920
+store it in this variable window when we
+ 
+
+235
+00:04:01,920 --> 00:04:03,890
+store it in this variable window when we
+initiated the class we set look back to
+
+236
+00:04:03,890 --> 00:04:03,900
+initiated the class we set look back to
+ 
+
+237
+00:04:03,900 --> 00:04:07,250
+initiated the class we set look back to
+24 so window contains the 24 most recent
+
+238
+00:04:07,250 --> 00:04:07,260
+24 so window contains the 24 most recent
+ 
+
+239
+00:04:07,260 --> 00:04:09,589
+24 so window contains the 24 most recent
+closing prices we find the perceptually
+
+240
+00:04:09,589 --> 00:04:09,599
+closing prices we find the perceptually
+ 
+
+241
+00:04:09,599 --> 00:04:11,990
+closing prices we find the perceptually
+important points on the recent data we
+
+242
+00:04:11,990 --> 00:04:12,000
+important points on the recent data we
+ 
+
+243
+00:04:12,000 --> 00:04:13,610
+important points on the recent data we
+update the x coordinates of the
+
+244
+00:04:13,610 --> 00:04:13,620
+update the x coordinates of the
+ 
+
+245
+00:04:13,620 --> 00:04:15,229
+update the x coordinates of the
+perceptually important points to match
+
+246
+00:04:15,229 --> 00:04:15,239
+perceptually important points to match
+ 
+
+247
+00:04:15,239 --> 00:04:17,870
+perceptually important points to match
+the indices of the entire array we Loop
+
+248
+00:04:17,870 --> 00:04:17,880
+the indices of the entire array we Loop
+ 
+
+249
+00:04:17,880 --> 00:04:19,370
+the indices of the entire array we Loop
+through the internal perceptually
+
+250
+00:04:19,370 --> 00:04:19,380
+through the internal perceptually
+ 
+
+251
+00:04:19,380 --> 00:04:21,590
+through the internal perceptually
+important points ignoring the first and
+
+252
+00:04:21,590 --> 00:04:21,600
+important points ignoring the first and
+ 
+
+253
+00:04:21,600 --> 00:04:23,570
+important points ignoring the first and
+last and compare them to the last set
+
+254
+00:04:23,570 --> 00:04:23,580
+last and compare them to the last set
+ 
+
+255
+00:04:23,580 --> 00:04:25,730
+last and compare them to the last set
+found if there is a difference found we
+
+256
+00:04:25,730 --> 00:04:25,740
+found if there is a difference found we
+ 
+
+257
+00:04:25,740 --> 00:04:28,430
+found if there is a difference found we
+set the Boolean same to false and break
+
+258
+00:04:28,430 --> 00:04:28,440
+set the Boolean same to false and break
+ 
+
+259
+00:04:28,440 --> 00:04:30,530
+set the Boolean same to false and break
+if the internal points are not the same
+
+260
+00:04:30,530 --> 00:04:30,540
+if the internal points are not the same
+ 
+
+261
+00:04:30,540 --> 00:04:32,390
+if the internal points are not the same
+we record the perceptually important
+
+262
+00:04:32,390 --> 00:04:32,400
+we record the perceptually important
+ 
+
+263
+00:04:32,400 --> 00:04:35,629
+we record the perceptually important
+points as a unique pattern we Z score
+
+264
+00:04:35,629 --> 00:04:35,639
+points as a unique pattern we Z score
+ 
+
+265
+00:04:35,639 --> 00:04:37,370
+points as a unique pattern we Z score
+normalize the price values by
+
+266
+00:04:37,370 --> 00:04:37,380
+normalize the price values by
+ 
+
+267
+00:04:37,380 --> 00:04:39,050
+normalize the price values by
+subtracting their mean and dividing by
+
+268
+00:04:39,050 --> 00:04:39,060
+subtracting their mean and dividing by
+ 
+
+269
+00:04:39,060 --> 00:04:41,210
+subtracting their mean and dividing by
+the standard deviation this will cause
+
+270
+00:04:41,210 --> 00:04:41,220
+the standard deviation this will cause
+ 
+
+271
+00:04:41,220 --> 00:04:42,830
+the standard deviation this will cause
+each pattern to have a similar price
+
+272
+00:04:42,830 --> 00:04:42,840
+each pattern to have a similar price
+ 
+
+273
+00:04:42,840 --> 00:04:44,629
+each pattern to have a similar price
+scale which allows us to Cluster price
+
+274
+00:04:44,629 --> 00:04:44,639
+scale which allows us to Cluster price
+ 
+
+275
+00:04:44,639 --> 00:04:46,189
+scale which allows us to Cluster price
+patterns at different times throughout
+
+276
+00:04:46,189 --> 00:04:46,199
+patterns at different times throughout
+ 
+
+277
+00:04:46,199 --> 00:04:48,110
+patterns at different times throughout
+the data we record our normalized
+
+278
+00:04:48,110 --> 00:04:48,120
+the data we record our normalized
+ 
+
+279
+00:04:48,120 --> 00:04:50,210
+the data we record our normalized
+pattern and the current index finally we
+
+280
+00:04:50,210 --> 00:04:50,220
+pattern and the current index finally we
+ 
+
+281
+00:04:50,220 --> 00:04:52,490
+pattern and the current index finally we
+update the indices of the last bound
+
+282
+00:04:52,490 --> 00:04:52,500
+update the indices of the last bound
+ 
+
+283
+00:04:52,500 --> 00:04:54,290
+update the indices of the last bound
+perceptually important points then
+
+284
+00:04:54,290 --> 00:04:54,300
+perceptually important points then
+ 
+
+285
+00:04:54,300 --> 00:04:56,150
+perceptually important points then
+continue looping through the rest of the
+
+286
+00:04:56,150 --> 00:04:56,160
+continue looping through the rest of the
+ 
+
+287
+00:04:56,160 --> 00:04:58,370
+continue looping through the rest of the
+data set after we have done this we have
+
+288
+00:04:58,370 --> 00:04:58,380
+data set after we have done this we have
+ 
+
+289
+00:04:58,380 --> 00:04:59,930
+data set after we have done this we have
+a collection of unique patterns the
+
+290
+00:04:59,930 --> 00:04:59,940
+a collection of unique patterns the
+ 
+
+291
+00:04:59,940 --> 00:05:02,150
+a collection of unique patterns the
+prices made throughout the data given I
+
+292
+00:05:02,150 --> 00:05:02,160
+prices made throughout the data given I
+ 
+
+293
+00:05:02,160 --> 00:05:03,650
+prices made throughout the data given I
+should note that we do not pay attention
+
+294
+00:05:03,650 --> 00:05:03,660
+should note that we do not pay attention
+ 
+
+295
+00:05:03,660 --> 00:05:05,629
+should note that we do not pay attention
+to the time between the points making up
+
+296
+00:05:05,629 --> 00:05:05,639
+to the time between the points making up
+ 
+
+297
+00:05:05,639 --> 00:05:07,790
+to the time between the points making up
+the pattern just the levels of price
+
+298
+00:05:07,790 --> 00:05:07,800
+the pattern just the levels of price
+ 
+
+299
+00:05:07,800 --> 00:05:09,890
+the pattern just the levels of price
+throughout the pattern now with our
+
+300
+00:05:09,890 --> 00:05:09,900
+throughout the pattern now with our
+ 
+
+301
+00:05:09,900 --> 00:05:11,570
+throughout the pattern now with our
+collection of normalized price patterns
+
+302
+00:05:11,570 --> 00:05:11,580
+collection of normalized price patterns
+ 
+
+303
+00:05:11,580 --> 00:05:13,610
+collection of normalized price patterns
+we will cluster them into similar groups
+
+304
+00:05:13,610 --> 00:05:13,620
+we will cluster them into similar groups
+ 
+
+305
+00:05:13,620 --> 00:05:15,530
+we will cluster them into similar groups
+there is a large variety of clustering
+
+306
+00:05:15,530 --> 00:05:15,540
+there is a large variety of clustering
+ 
+
+307
+00:05:15,540 --> 00:05:17,450
+there is a large variety of clustering
+algorithms each with its own merits and
+
+308
+00:05:17,450 --> 00:05:17,460
+algorithms each with its own merits and
+ 
+
+309
+00:05:17,460 --> 00:05:19,550
+algorithms each with its own merits and
+weaknesses but one important feature we
+
+310
+00:05:19,550 --> 00:05:19,560
+weaknesses but one important feature we
+ 
+
+311
+00:05:19,560 --> 00:05:21,350
+weaknesses but one important feature we
+need is the ability to classify new
+
+312
+00:05:21,350 --> 00:05:21,360
+need is the ability to classify new
+ 
+
+313
+00:05:21,360 --> 00:05:23,749
+need is the ability to classify new
+observations into a cluster this way we
+
+314
+00:05:23,749 --> 00:05:23,759
+observations into a cluster this way we
+ 
+
+315
+00:05:23,759 --> 00:05:25,430
+observations into a cluster this way we
+can use the found patterns on out of
+
+316
+00:05:25,430 --> 00:05:25,440
+can use the found patterns on out of
+ 
+
+317
+00:05:25,440 --> 00:05:27,290
+can use the found patterns on out of
+sample data I'm going to elect to use
+
+318
+00:05:27,290 --> 00:05:27,300
+sample data I'm going to elect to use
+ 
+
+319
+00:05:27,300 --> 00:05:29,570
+sample data I'm going to elect to use
+the simple well-known k-means clustering
+
+320
+00:05:29,570 --> 00:05:29,580
+the simple well-known k-means clustering
+ 
+
+321
+00:05:29,580 --> 00:05:32,090
+the simple well-known k-means clustering
+this algorithm clusters data into a set
+
+322
+00:05:32,090 --> 00:05:32,100
+this algorithm clusters data into a set
+ 
+
+323
+00:05:32,100 --> 00:05:34,249
+this algorithm clusters data into a set
+number of clusters the cluster centers
+
+324
+00:05:34,249 --> 00:05:34,259
+number of clusters the cluster centers
+ 
+
+325
+00:05:34,259 --> 00:05:36,050
+number of clusters the cluster centers
+are the mean values of all the samples
+
+326
+00:05:36,050 --> 00:05:36,060
+are the mean values of all the samples
+ 
+
+327
+00:05:36,060 --> 00:05:38,090
+are the mean values of all the samples
+within a cluster new samples can be
+
+328
+00:05:38,090 --> 00:05:38,100
+within a cluster new samples can be
+ 
+
+329
+00:05:38,100 --> 00:05:39,650
+within a cluster new samples can be
+assigned to a cluster by finding the
+
+330
+00:05:39,650 --> 00:05:39,660
+assigned to a cluster by finding the
+ 
+
+331
+00:05:39,660 --> 00:05:41,930
+assigned to a cluster by finding the
+cluster sensor that is the closest to it
+
+332
+00:05:41,930 --> 00:05:41,940
+cluster sensor that is the closest to it
+ 
+
+333
+00:05:41,940 --> 00:05:43,909
+cluster sensor that is the closest to it
+I won't cover the algorithm here but
+
+334
+00:05:43,909 --> 00:05:43,919
+I won't cover the algorithm here but
+ 
+
+335
+00:05:43,919 --> 00:05:45,350
+I won't cover the algorithm here but
+there are many resources available
+
+336
+00:05:45,350 --> 00:05:45,360
+there are many resources available
+ 
+
+337
+00:05:45,360 --> 00:05:47,150
+there are many resources available
+online explaining it if you are
+
+338
+00:05:47,150 --> 00:05:47,160
+online explaining it if you are
+ 
+
+339
+00:05:47,160 --> 00:05:49,730
+online explaining it if you are
+unfamiliar when clustering these pattern
+
+340
+00:05:49,730 --> 00:05:49,740
+unfamiliar when clustering these pattern
+ 
+
+341
+00:05:49,740 --> 00:05:51,710
+unfamiliar when clustering these pattern
+shapes with the K means algorithm we
+
+342
+00:05:51,710 --> 00:05:51,720
+shapes with the K means algorithm we
+ 
+
+343
+00:05:51,720 --> 00:05:53,689
+shapes with the K means algorithm we
+have an important decision to make how
+
+344
+00:05:53,689 --> 00:05:53,699
+have an important decision to make how
+ 
+
+345
+00:05:53,699 --> 00:05:56,150
+have an important decision to make how
+many clusters do we use if we use less
+
+346
+00:05:56,150 --> 00:05:56,160
+many clusters do we use if we use less
+ 
+
+347
+00:05:56,160 --> 00:05:58,129
+many clusters do we use if we use less
+clusters then the amount of price shapes
+
+348
+00:05:58,129 --> 00:05:58,139
+clusters then the amount of price shapes
+ 
+
+349
+00:05:58,139 --> 00:06:00,110
+clusters then the amount of price shapes
+in each cluster will be higher which
+
+350
+00:06:00,110 --> 00:06:00,120
+in each cluster will be higher which
+ 
+
+351
+00:06:00,120 --> 00:06:01,730
+in each cluster will be higher which
+allows us to have a higher sample size
+
+352
+00:06:01,730 --> 00:06:01,740
+allows us to have a higher sample size
+ 
+
+353
+00:06:01,740 --> 00:06:03,529
+allows us to have a higher sample size
+and thus higher confidence when we
+
+354
+00:06:03,529 --> 00:06:03,539
+and thus higher confidence when we
+ 
+
+355
+00:06:03,539 --> 00:06:05,570
+and thus higher confidence when we
+assess the performance of the cluster of
+
+356
+00:06:05,570 --> 00:06:05,580
+assess the performance of the cluster of
+ 
+
+357
+00:06:05,580 --> 00:06:08,270
+assess the performance of the cluster of
+price shapes however using less clusters
+
+358
+00:06:08,270 --> 00:06:08,280
+price shapes however using less clusters
+ 
+
+359
+00:06:08,280 --> 00:06:09,830
+price shapes however using less clusters
+will group price shapes that are less
+
+360
+00:06:09,830 --> 00:06:09,840
+will group price shapes that are less
+ 
+
+361
+00:06:09,840 --> 00:06:12,170
+will group price shapes that are less
+similar so we may miss out on a truly
+
+362
+00:06:12,170 --> 00:06:12,180
+similar so we may miss out on a truly
+ 
+
+363
+00:06:12,180 --> 00:06:14,150
+similar so we may miss out on a truly
+good pattern that exists but is lumped
+
+364
+00:06:14,150 --> 00:06:14,160
+good pattern that exists but is lumped
+ 
+
+365
+00:06:14,160 --> 00:06:16,430
+good pattern that exists but is lumped
+in with less Salient price shapes there
+
+366
+00:06:16,430 --> 00:06:16,440
+in with less Salient price shapes there
+ 
+
+367
+00:06:16,440 --> 00:06:18,230
+in with less Salient price shapes there
+is no perfect solution to this problem
+
+368
+00:06:18,230 --> 00:06:18,240
+is no perfect solution to this problem
+ 
+
+369
+00:06:18,240 --> 00:06:20,150
+is no perfect solution to this problem
+and it is certainly something requiring
+
+370
+00:06:20,150 --> 00:06:20,160
+and it is certainly something requiring
+ 
+
+371
+00:06:20,160 --> 00:06:22,249
+and it is certainly something requiring
+further research but a decent approach I
+
+372
+00:06:22,249 --> 00:06:22,259
+further research but a decent approach I
+ 
+
+373
+00:06:22,259 --> 00:06:24,469
+further research but a decent approach I
+found is using the silhouette method the
+
+374
+00:06:24,469 --> 00:06:24,479
+found is using the silhouette method the
+ 
+
+375
+00:06:24,479 --> 00:06:26,390
+found is using the silhouette method the
+silhouette method scores each sample for
+
+376
+00:06:26,390 --> 00:06:26,400
+silhouette method scores each sample for
+ 
+
+377
+00:06:26,400 --> 00:06:28,010
+silhouette method scores each sample for
+how well it fits into its cluster
+
+378
+00:06:28,010 --> 00:06:28,020
+how well it fits into its cluster
+ 
+
+379
+00:06:28,020 --> 00:06:29,749
+how well it fits into its cluster
+samples that fit nicely toward the
+
+380
+00:06:29,749 --> 00:06:29,759
+samples that fit nicely toward the
+ 
+
+381
+00:06:29,759 --> 00:06:31,850
+samples that fit nicely toward the
+center of their cluster score high while
+
+382
+00:06:31,850 --> 00:06:31,860
+center of their cluster score high while
+ 
+
+383
+00:06:31,860 --> 00:06:33,950
+center of their cluster score high while
+samples that are on the Outer Edge lying
+
+384
+00:06:33,950 --> 00:06:33,960
+samples that are on the Outer Edge lying
+ 
+
+385
+00:06:33,960 --> 00:06:36,230
+samples that are on the Outer Edge lying
+in between two clusters will get a lower
+
+386
+00:06:36,230 --> 00:06:36,240
+in between two clusters will get a lower
+ 
+
+387
+00:06:36,240 --> 00:06:38,150
+in between two clusters will get a lower
+score the silhouette score can be
+
+388
+00:06:38,150 --> 00:06:38,160
+score the silhouette score can be
+ 
+
+389
+00:06:38,160 --> 00:06:40,010
+score the silhouette score can be
+averaged across all samples and this
+
+390
+00:06:40,010 --> 00:06:40,020
+averaged across all samples and this
+ 
+
+391
+00:06:40,020 --> 00:06:41,570
+averaged across all samples and this
+gives us an idea of how well the
+
+392
+00:06:41,570 --> 00:06:41,580
+gives us an idea of how well the
+ 
+
+393
+00:06:41,580 --> 00:06:43,730
+gives us an idea of how well the
+clustering performs by using this method
+
+394
+00:06:43,730 --> 00:06:43,740
+clustering performs by using this method
+ 
+
+395
+00:06:43,740 --> 00:06:45,409
+clustering performs by using this method
+we can compare the silhouette score when
+
+396
+00:06:45,409 --> 00:06:45,419
+we can compare the silhouette score when
+ 
+
+397
+00:06:45,419 --> 00:06:48,050
+we can compare the silhouette score when
+using k-means with 5 clusters versus 10
+
+398
+00:06:48,050 --> 00:06:48,060
+using k-means with 5 clusters versus 10
+ 
+
+399
+00:06:48,060 --> 00:06:50,689
+using k-means with 5 clusters versus 10
+clusters and select the better forming
+
+400
+00:06:50,689 --> 00:06:50,699
+clusters and select the better forming
+ 
+
+401
+00:06:50,699 --> 00:06:52,670
+clusters and select the better forming
+amount of clusters I'll leave the
+
+402
+00:06:52,670 --> 00:06:52,680
+amount of clusters I'll leave the
+ 
+
+403
+00:06:52,680 --> 00:06:54,350
+amount of clusters I'll leave the
+citation for the silhouette method in
+
+404
+00:06:54,350 --> 00:06:54,360
+citation for the silhouette method in
+ 
+
+405
+00:06:54,360 --> 00:06:55,909
+citation for the silhouette method in
+the description if you want more detail
+
+406
+00:06:55,909 --> 00:06:55,919
+the description if you want more detail
+ 
+
+407
+00:06:55,919 --> 00:06:58,070
+the description if you want more detail
+but thankfully there is a python library
+
+408
+00:06:58,070 --> 00:06:58,080
+but thankfully there is a python library
+ 
+
+409
+00:06:58,080 --> 00:07:00,170
+but thankfully there is a python library
+to do the work for us so let's look at
+
+410
+00:07:00,170 --> 00:07:00,180
+to do the work for us so let's look at
+ 
+
+411
+00:07:00,180 --> 00:07:02,390
+to do the work for us so let's look at
+the code for clustering to do the
+
+412
+00:07:02,390 --> 00:07:02,400
+the code for clustering to do the
+ 
+
+413
+00:07:02,400 --> 00:07:04,610
+the code for clustering to do the
+clustering we will use the pi clustering
+
+414
+00:07:04,610 --> 00:07:04,620
+clustering we will use the pi clustering
+ 
+
+415
+00:07:04,620 --> 00:07:05,570
+clustering we will use the pi clustering
+Library
+
+416
+00:07:05,570 --> 00:07:05,580
+Library
+ 
+
+417
+00:07:05,580 --> 00:07:08,090
+Library
+these are the Imports that we need
+
+418
+00:07:08,090 --> 00:07:08,100
+these are the Imports that we need
+ 
+
+419
+00:07:08,100 --> 00:07:10,370
+these are the Imports that we need
+this is the same train function we saw
+
+420
+00:07:10,370 --> 00:07:10,380
+this is the same train function we saw
+ 
+
+421
+00:07:10,380 --> 00:07:12,469
+this is the same train function we saw
+earlier after finding the unique
+
+422
+00:07:12,469 --> 00:07:12,479
+earlier after finding the unique
+ 
+
+423
+00:07:12,479 --> 00:07:14,809
+earlier after finding the unique
+perceptually important Point patterns we
+
+424
+00:07:14,809 --> 00:07:14,819
+perceptually important Point patterns we
+ 
+
+425
+00:07:14,819 --> 00:07:16,790
+perceptually important Point patterns we
+use the silhouette case search to try
+
+426
+00:07:16,790 --> 00:07:16,800
+use the silhouette case search to try
+ 
+
+427
+00:07:16,800 --> 00:07:19,010
+use the silhouette case search to try
+different amounts of clusters I have it
+
+428
+00:07:19,010 --> 00:07:19,020
+different amounts of clusters I have it
+ 
+
+429
+00:07:19,020 --> 00:07:21,170
+different amounts of clusters I have it
+set to try five clusters up to 40
+
+430
+00:07:21,170 --> 00:07:21,180
+set to try five clusters up to 40
+ 
+
+431
+00:07:21,180 --> 00:07:23,270
+set to try five clusters up to 40
+clusters we get the best amount of
+
+432
+00:07:23,270 --> 00:07:23,280
+clusters we get the best amount of
+ 
+
+433
+00:07:23,280 --> 00:07:25,550
+clusters we get the best amount of
+clusters from the silhouette search then
+
+434
+00:07:25,550 --> 00:07:25,560
+clusters from the silhouette search then
+ 
+
+435
+00:07:25,560 --> 00:07:27,350
+clusters from the silhouette search then
+we call the function k-means cluster
+
+436
+00:07:27,350 --> 00:07:27,360
+we call the function k-means cluster
+ 
+
+437
+00:07:27,360 --> 00:07:28,850
+we call the function k-means cluster
+with the amount the silhouette method
+
+438
+00:07:28,850 --> 00:07:28,860
+with the amount the silhouette method
+ 
+
+439
+00:07:28,860 --> 00:07:31,189
+with the amount the silhouette method
+deemed best the K means clustering
+
+440
+00:07:31,189 --> 00:07:31,199
+deemed best the K means clustering
+ 
+
+441
+00:07:31,199 --> 00:07:33,290
+deemed best the K means clustering
+algorithm needs initial cluster centers
+
+442
+00:07:33,290 --> 00:07:33,300
+algorithm needs initial cluster centers
+ 
+
+443
+00:07:33,300 --> 00:07:35,390
+algorithm needs initial cluster centers
+to start the optimization we get the
+
+444
+00:07:35,390 --> 00:07:35,400
+to start the optimization we get the
+ 
+
+445
+00:07:35,400 --> 00:07:37,189
+to start the optimization we get the
+initial centers with the k-means plus
+
+446
+00:07:37,189 --> 00:07:37,199
+initial centers with the k-means plus
+ 
+
+447
+00:07:37,199 --> 00:07:39,710
+initial centers with the k-means plus
+plus initializer then we pass the
+
+448
+00:07:39,710 --> 00:07:39,720
+plus initializer then we pass the
+ 
+
+449
+00:07:39,720 --> 00:07:41,390
+plus initializer then we pass the
+initial clusters and the unique pit
+
+450
+00:07:41,390 --> 00:07:41,400
+initial clusters and the unique pit
+ 
+
+451
+00:07:41,400 --> 00:07:43,490
+initial clusters and the unique pit
+patterns to the k-means instance and
+
+452
+00:07:43,490 --> 00:07:43,500
+patterns to the k-means instance and
+ 
+
+453
+00:07:43,500 --> 00:07:46,370
+patterns to the k-means instance and
+process we get the cluster centers and
+
+454
+00:07:46,370 --> 00:07:46,380
+process we get the cluster centers and
+ 
+
+455
+00:07:46,380 --> 00:07:48,290
+process we get the cluster centers and
+cluster membership of each sample and
+
+456
+00:07:48,290 --> 00:07:48,300
+cluster membership of each sample and
+ 
+
+457
+00:07:48,300 --> 00:07:50,390
+cluster membership of each sample and
+the data set at this point the price
+
+458
+00:07:50,390 --> 00:07:50,400
+the data set at this point the price
+ 
+
+459
+00:07:50,400 --> 00:07:52,730
+the data set at this point the price
+shapes are placed into clusters now we
+
+460
+00:07:52,730 --> 00:07:52,740
+shapes are placed into clusters now we
+ 
+
+461
+00:07:52,740 --> 00:07:54,710
+shapes are placed into clusters now we
+assess the Clusters and select the ones
+
+462
+00:07:54,710 --> 00:07:54,720
+assess the Clusters and select the ones
+ 
+
+463
+00:07:54,720 --> 00:07:56,809
+assess the Clusters and select the ones
+that precede movements in price to
+
+464
+00:07:56,809 --> 00:07:56,819
+that precede movements in price to
+ 
+
+465
+00:07:56,819 --> 00:07:58,850
+that precede movements in price to
+assess the performance of each cluster I
+
+466
+00:07:58,850 --> 00:07:58,860
+assess the performance of each cluster I
+ 
+
+467
+00:07:58,860 --> 00:08:01,189
+assess the performance of each cluster I
+employ a simple holding period each time
+
+468
+00:08:01,189 --> 00:08:01,199
+employ a simple holding period each time
+ 
+
+469
+00:08:01,199 --> 00:08:03,170
+employ a simple holding period each time
+a pattern of a given cluster is found we
+
+470
+00:08:03,170 --> 00:08:03,180
+a pattern of a given cluster is found we
+ 
+
+471
+00:08:03,180 --> 00:08:04,730
+a pattern of a given cluster is found we
+look at the Market's price change over
+
+472
+00:08:04,730 --> 00:08:04,740
+look at the Market's price change over
+ 
+
+473
+00:08:04,740 --> 00:08:07,249
+look at the Market's price change over
+the next H candles in the example we've
+
+474
+00:08:07,249 --> 00:08:07,259
+the next H candles in the example we've
+ 
+
+475
+00:08:07,259 --> 00:08:08,749
+the next H candles in the example we've
+used so far we have found five
+
+476
+00:08:08,749 --> 00:08:08,759
+used so far we have found five
+ 
+
+477
+00:08:08,759 --> 00:08:10,490
+used so far we have found five
+perceptually important points on 24
+
+478
+00:08:10,490 --> 00:08:10,500
+perceptually important points on 24
+ 
+
+479
+00:08:10,500 --> 00:08:12,830
+perceptually important points on 24
+candles of data since we are looking at
+
+480
+00:08:12,830 --> 00:08:12,840
+candles of data since we are looking at
+ 
+
+481
+00:08:12,840 --> 00:08:15,230
+candles of data since we are looking at
+patterns that span 24 candles I think a
+
+482
+00:08:15,230 --> 00:08:15,240
+patterns that span 24 candles I think a
+ 
+
+483
+00:08:15,240 --> 00:08:16,790
+patterns that span 24 candles I think a
+natural holding period would be less
+
+484
+00:08:16,790 --> 00:08:16,800
+natural holding period would be less
+ 
+
+485
+00:08:16,800 --> 00:08:20,869
+natural holding period would be less
+than 24. I chose 6 as 1 4 of the pattern
+
+486
+00:08:20,869 --> 00:08:20,879
+than 24. I chose 6 as 1 4 of the pattern
+ 
+
+487
+00:08:20,879 --> 00:08:22,490
+than 24. I chose 6 as 1 4 of the pattern
+length seems like a reasonable
+
+488
+00:08:22,490 --> 00:08:22,500
+length seems like a reasonable
+ 
+
+489
+00:08:22,500 --> 00:08:25,129
+length seems like a reasonable
+prediction Horizon this choice is fairly
+
+490
+00:08:25,129 --> 00:08:25,139
+prediction Horizon this choice is fairly
+ 
+
+491
+00:08:25,139 --> 00:08:27,050
+prediction Horizon this choice is fairly
+arbitrary but we have to pick something
+
+492
+00:08:27,050 --> 00:08:27,060
+arbitrary but we have to pick something
+ 
+
+493
+00:08:27,060 --> 00:08:28,969
+arbitrary but we have to pick something
+over the course of the training set we
+
+494
+00:08:28,969 --> 00:08:28,979
+over the course of the training set we
+ 
+
+495
+00:08:28,979 --> 00:08:30,710
+over the course of the training set we
+will find the Martin ratio for each
+
+496
+00:08:30,710 --> 00:08:30,720
+will find the Martin ratio for each
+ 
+
+497
+00:08:30,720 --> 00:08:32,930
+will find the Martin ratio for each
+cluster the Martin ratio is calculated
+
+498
+00:08:32,930 --> 00:08:32,940
+cluster the Martin ratio is calculated
+ 
+
+499
+00:08:32,940 --> 00:08:35,149
+cluster the Martin ratio is calculated
+by dividing the total return by the
+
+500
+00:08:35,149 --> 00:08:35,159
+by dividing the total return by the
+ 
+
+501
+00:08:35,159 --> 00:08:37,010
+by dividing the total return by the
+ulcer index the ulcer index is
+
+502
+00:08:37,010 --> 00:08:37,020
+ulcer index the ulcer index is
+ 
+
+503
+00:08:37,020 --> 00:08:38,630
+ulcer index the ulcer index is
+calculated by summing the squared
+
+504
+00:08:38,630 --> 00:08:38,640
+calculated by summing the squared
+ 
+
+505
+00:08:38,640 --> 00:08:40,850
+calculated by summing the squared
+drawdown at each candle in the data set
+
+506
+00:08:40,850 --> 00:08:40,860
+drawdown at each candle in the data set
+ 
+
+507
+00:08:40,860 --> 00:08:42,709
+drawdown at each candle in the data set
+this causes the Martin ratio to be
+
+508
+00:08:42,709 --> 00:08:42,719
+this causes the Martin ratio to be
+ 
+
+509
+00:08:42,719 --> 00:08:44,750
+this causes the Martin ratio to be
+punished by both the length and depth of
+
+510
+00:08:44,750 --> 00:08:44,760
+punished by both the length and depth of
+ 
+
+511
+00:08:44,760 --> 00:08:47,090
+punished by both the length and depth of
+drawdowns if a cluster of patterns have
+
+512
+00:08:47,090 --> 00:08:47,100
+drawdowns if a cluster of patterns have
+ 
+
+513
+00:08:47,100 --> 00:08:49,009
+drawdowns if a cluster of patterns have
+smaller drawdowns or recover quickly
+
+514
+00:08:49,009 --> 00:08:49,019
+smaller drawdowns or recover quickly
+ 
+
+515
+00:08:49,019 --> 00:08:51,110
+smaller drawdowns or recover quickly
+from drawdowns then they will have a
+
+516
+00:08:51,110 --> 00:08:51,120
+from drawdowns then they will have a
+ 
+
+517
+00:08:51,120 --> 00:08:53,150
+from drawdowns then they will have a
+higher margin ratio the developer of the
+
+518
+00:08:53,150 --> 00:08:53,160
+higher margin ratio the developer of the
+ 
+
+519
+00:08:53,160 --> 00:08:54,889
+higher margin ratio the developer of the
+Martin ratio has an excellent article
+
+520
+00:08:54,889 --> 00:08:54,899
+Martin ratio has an excellent article
+ 
+
+521
+00:08:54,899 --> 00:08:57,170
+Martin ratio has an excellent article
+describing it in detail which I linked
+
+522
+00:08:57,170 --> 00:08:57,180
+describing it in detail which I linked
+ 
+
+523
+00:08:57,180 --> 00:08:59,630
+describing it in detail which I linked
+below after we find the Martin ratio for
+
+524
+00:08:59,630 --> 00:08:59,640
+below after we find the Martin ratio for
+ 
+
+525
+00:08:59,640 --> 00:09:01,970
+below after we find the Martin ratio for
+each cluster we will select the best
+
+526
+00:09:01,970 --> 00:09:01,980
+each cluster we will select the best
+ 
+
+527
+00:09:01,980 --> 00:09:03,949
+each cluster we will select the best
+pattern for trading long and the best
+
+528
+00:09:03,949 --> 00:09:03,959
+pattern for trading long and the best
+ 
+
+529
+00:09:03,959 --> 00:09:05,690
+pattern for trading long and the best
+pattern for trading short we will
+
+530
+00:09:05,690 --> 00:09:05,700
+pattern for trading short we will
+ 
+
+531
+00:09:05,700 --> 00:09:07,730
+pattern for trading short we will
+combine the signals of the best long and
+
+532
+00:09:07,730 --> 00:09:07,740
+combine the signals of the best long and
+ 
+
+533
+00:09:07,740 --> 00:09:09,949
+combine the signals of the best long and
+short patterns then compute the Martin
+
+534
+00:09:09,949 --> 00:09:09,959
+short patterns then compute the Martin
+ 
+
+535
+00:09:09,959 --> 00:09:12,290
+short patterns then compute the Martin
+ratio on the combined version this will
+
+536
+00:09:12,290 --> 00:09:12,300
+ratio on the combined version this will
+ 
+
+537
+00:09:12,300 --> 00:09:14,570
+ratio on the combined version this will
+be our final performance figure let's
+
+538
+00:09:14,570 --> 00:09:14,580
+be our final performance figure let's
+ 
+
+539
+00:09:14,580 --> 00:09:16,970
+be our final performance figure let's
+look at the code for this back looking
+
+540
+00:09:16,970 --> 00:09:16,980
+look at the code for this back looking
+ 
+
+541
+00:09:16,980 --> 00:09:19,310
+look at the code for this back looking
+at the train function I didn't mention
+
+542
+00:09:19,310 --> 00:09:19,320
+at the train function I didn't mention
+ 
+
+543
+00:09:19,320 --> 00:09:21,650
+at the train function I didn't mention
+this earlier but at the start we compute
+
+544
+00:09:21,650 --> 00:09:21,660
+this earlier but at the start we compute
+ 
+
+545
+00:09:21,660 --> 00:09:23,990
+this earlier but at the start we compute
+the logarithmic returns of the closing
+
+546
+00:09:23,990 --> 00:09:24,000
+the logarithmic returns of the closing
+ 
+
+547
+00:09:24,000 --> 00:09:26,570
+the logarithmic returns of the closing
+price and shift them forward by one
+
+548
+00:09:26,570 --> 00:09:26,580
+price and shift them forward by one
+ 
+
+549
+00:09:26,580 --> 00:09:29,030
+price and shift them forward by one
+candle we will use these returns in a
+
+550
+00:09:29,030 --> 00:09:29,040
+candle we will use these returns in a
+ 
+
+551
+00:09:29,040 --> 00:09:31,970
+candle we will use these returns in a
+moment after clustering the patterns we
+
+552
+00:09:31,970 --> 00:09:31,980
+moment after clustering the patterns we
+ 
+
+553
+00:09:31,980 --> 00:09:34,130
+moment after clustering the patterns we
+call the function git cluster signals
+
+554
+00:09:34,130 --> 00:09:34,140
+call the function git cluster signals
+ 
+
+555
+00:09:34,140 --> 00:09:37,250
+call the function git cluster signals
+and here's the function we Loop through
+
+556
+00:09:37,250 --> 00:09:37,260
+and here's the function we Loop through
+ 
+
+557
+00:09:37,260 --> 00:09:40,130
+and here's the function we Loop through
+each cluster found for each cluster we
+
+558
+00:09:40,130 --> 00:09:40,140
+each cluster found for each cluster we
+ 
+
+559
+00:09:40,140 --> 00:09:41,930
+each cluster found for each cluster we
+create a signal concurrent with the
+
+560
+00:09:41,930 --> 00:09:41,940
+create a signal concurrent with the
+ 
+
+561
+00:09:41,940 --> 00:09:44,090
+create a signal concurrent with the
+closing press array we passed in earlier
+
+562
+00:09:44,090 --> 00:09:44,100
+closing press array we passed in earlier
+ 
+
+563
+00:09:44,100 --> 00:09:47,210
+closing press array we passed in earlier
+we initialize it as all zeros we Loop
+
+564
+00:09:47,210 --> 00:09:47,220
+we initialize it as all zeros we Loop
+ 
+
+565
+00:09:47,220 --> 00:09:49,730
+we initialize it as all zeros we Loop
+through each member of the cluster we
+
+566
+00:09:49,730 --> 00:09:49,740
+through each member of the cluster we
+ 
+
+567
+00:09:49,740 --> 00:09:51,889
+through each member of the cluster we
+get the index in the closing price array
+
+568
+00:09:51,889 --> 00:09:51,899
+get the index in the closing price array
+ 
+
+569
+00:09:51,899 --> 00:09:53,810
+get the index in the closing price array
+that this cluster member or pattern
+
+570
+00:09:53,810 --> 00:09:53,820
+that this cluster member or pattern
+ 
+
+571
+00:09:53,820 --> 00:09:56,690
+that this cluster member or pattern
+happens the index is the last candle in
+
+572
+00:09:56,690 --> 00:09:56,700
+happens the index is the last candle in
+ 
+
+573
+00:09:56,700 --> 00:09:59,389
+happens the index is the last candle in
+the pattern we set the signal array to 1
+
+574
+00:09:59,389 --> 00:09:59,399
+the pattern we set the signal array to 1
+ 
+
+575
+00:09:59,399 --> 00:10:02,630
+the pattern we set the signal array to 1
+for the set hold period we used six so
+
+576
+00:10:02,630 --> 00:10:02,640
+for the set hold period we used six so
+ 
+
+577
+00:10:02,640 --> 00:10:04,670
+for the set hold period we used six so
+this will add six ones after this
+
+578
+00:10:04,670 --> 00:10:04,680
+this will add six ones after this
+ 
+
+579
+00:10:04,680 --> 00:10:06,530
+this will add six ones after this
+pattern occurred to the signal array
+
+580
+00:10:06,530 --> 00:10:06,540
+pattern occurred to the signal array
+ 
+
+581
+00:10:06,540 --> 00:10:08,690
+pattern occurred to the signal array
+then we add our signals to the this list
+
+582
+00:10:08,690 --> 00:10:08,700
+then we add our signals to the this list
+ 
+
+583
+00:10:08,700 --> 00:10:11,389
+then we add our signals to the this list
+it is a class variable back to the train
+
+584
+00:10:11,389 --> 00:10:11,399
+it is a class variable back to the train
+ 
+
+585
+00:10:11,399 --> 00:10:13,550
+it is a class variable back to the train
+function after Computing our cluster
+
+586
+00:10:13,550 --> 00:10:13,560
+function after Computing our cluster
+ 
+
+587
+00:10:13,560 --> 00:10:15,949
+function after Computing our cluster
+signals we call the assign clusters
+
+588
+00:10:15,949 --> 00:10:15,959
+signals we call the assign clusters
+ 
+
+589
+00:10:15,959 --> 00:10:19,190
+signals we call the assign clusters
+function we Loop through each cluster we
+
+590
+00:10:19,190 --> 00:10:19,200
+function we Loop through each cluster we
+ 
+
+591
+00:10:19,200 --> 00:10:21,110
+function we Loop through each cluster we
+multiply the cluster signal by the
+
+592
+00:10:21,110 --> 00:10:21,120
+multiply the cluster signal by the
+ 
+
+593
+00:10:21,120 --> 00:10:23,389
+multiply the cluster signal by the
+logarithmic Returns the cluster signal
+
+594
+00:10:23,389 --> 00:10:23,399
+logarithmic Returns the cluster signal
+ 
+
+595
+00:10:23,399 --> 00:10:25,670
+logarithmic Returns the cluster signal
+is composed of zeros and ones so this
+
+596
+00:10:25,670 --> 00:10:25,680
+is composed of zeros and ones so this
+ 
+
+597
+00:10:25,680 --> 00:10:27,710
+is composed of zeros and ones so this
+gives us all the returns that a cluster
+
+598
+00:10:27,710 --> 00:10:27,720
+gives us all the returns that a cluster
+ 
+
+599
+00:10:27,720 --> 00:10:29,750
+gives us all the returns that a cluster
+was exposed to the market we compute the
+
+600
+00:10:29,750 --> 00:10:29,760
+was exposed to the market we compute the
+ 
+
+601
+00:10:29,760 --> 00:10:31,910
+was exposed to the market we compute the
+Martin ratio from these returns we'll
+
+602
+00:10:31,910 --> 00:10:31,920
+Martin ratio from these returns we'll
+ 
+
+603
+00:10:31,920 --> 00:10:33,530
+Martin ratio from these returns we'll
+look at this function in a second but
+
+604
+00:10:33,530 --> 00:10:33,540
+look at this function in a second but
+ 
+
+605
+00:10:33,540 --> 00:10:35,810
+look at this function in a second but
+now it returns a number we record the
+
+606
+00:10:35,810 --> 00:10:35,820
+now it returns a number we record the
+ 
+
+607
+00:10:35,820 --> 00:10:38,210
+now it returns a number we record the
+Martin ratio for each cluster after the
+
+608
+00:10:38,210 --> 00:10:38,220
+Martin ratio for each cluster after the
+ 
+
+609
+00:10:38,220 --> 00:10:40,370
+Martin ratio for each cluster after the
+loop we find the cluster index of the
+
+610
+00:10:40,370 --> 00:10:40,380
+loop we find the cluster index of the
+ 
+
+611
+00:10:40,380 --> 00:10:42,889
+loop we find the cluster index of the
+highest margin ratio this is the best
+
+612
+00:10:42,889 --> 00:10:42,899
+highest margin ratio this is the best
+ 
+
+613
+00:10:42,899 --> 00:10:45,050
+highest margin ratio this is the best
+long pattern then we find the cluster
+
+614
+00:10:45,050 --> 00:10:45,060
+long pattern then we find the cluster
+ 
+
+615
+00:10:45,060 --> 00:10:47,389
+long pattern then we find the cluster
+index of the lowest Martin ratio this
+
+616
+00:10:47,389 --> 00:10:47,399
+index of the lowest Martin ratio this
+ 
+
+617
+00:10:47,399 --> 00:10:49,490
+index of the lowest Martin ratio this
+will be our short pattern we record the
+
+618
+00:10:49,490 --> 00:10:49,500
+will be our short pattern we record the
+ 
+
+619
+00:10:49,500 --> 00:10:51,769
+will be our short pattern we record the
+long and short pattern in these lists I
+
+620
+00:10:51,769 --> 00:10:51,779
+long and short pattern in these lists I
+ 
+
+621
+00:10:51,779 --> 00:10:53,329
+long and short pattern in these lists I
+experimented with selecting multiple
+
+622
+00:10:53,329 --> 00:10:53,339
+experimented with selecting multiple
+ 
+
+623
+00:10:53,339 --> 00:10:55,190
+experimented with selecting multiple
+patterns and I used a list to record
+
+624
+00:10:55,190 --> 00:10:55,200
+patterns and I used a list to record
+ 
+
+625
+00:10:55,200 --> 00:10:57,769
+patterns and I used a list to record
+these selected patterns here is the mark
+
+626
+00:10:57,769 --> 00:10:57,779
+these selected patterns here is the mark
+ 
+
+627
+00:10:57,779 --> 00:11:00,350
+these selected patterns here is the mark
+ratio function it is passed an array of
+
+628
+00:11:00,350 --> 00:11:00,360
+ratio function it is passed an array of
+ 
+
+629
+00:11:00,360 --> 00:11:03,410
+ratio function it is passed an array of
+log returns we first sum the returns if
+
+630
+00:11:03,410 --> 00:11:03,420
+log returns we first sum the returns if
+ 
+
+631
+00:11:03,420 --> 00:11:05,449
+log returns we first sum the returns if
+the sum is negative we set this Boolean
+
+632
+00:11:05,449 --> 00:11:05,459
+the sum is negative we set this Boolean
+ 
+
+633
+00:11:05,459 --> 00:11:07,790
+the sum is negative we set this Boolean
+as true lagging for short trading and we
+
+634
+00:11:07,790 --> 00:11:07,800
+as true lagging for short trading and we
+ 
+
+635
+00:11:07,800 --> 00:11:09,949
+as true lagging for short trading and we
+we also flip the signs we get the
+
+636
+00:11:09,949 --> 00:11:09,959
+we also flip the signs we get the
+ 
+
+637
+00:11:09,959 --> 00:11:12,290
+we also flip the signs we get the
+cumulative sum of returns we
+
+638
+00:11:12,290 --> 00:11:12,300
+cumulative sum of returns we
+ 
+
+639
+00:11:12,300 --> 00:11:13,850
+cumulative sum of returns we
+exponentiate them for computing
+
+640
+00:11:13,850 --> 00:11:13,860
+exponentiate them for computing
+ 
+
+641
+00:11:13,860 --> 00:11:16,130
+exponentiate them for computing
+percentage drawdown we also convert it
+
+642
+00:11:16,130 --> 00:11:16,140
+percentage drawdown we also convert it
+ 
+
+643
+00:11:16,140 --> 00:11:18,170
+percentage drawdown we also convert it
+to a panda series to use the cumulative
+
+644
+00:11:18,170 --> 00:11:18,180
+to a panda series to use the cumulative
+ 
+
+645
+00:11:18,180 --> 00:11:20,150
+to a panda series to use the cumulative
+Max function in this line we are
+
+646
+00:11:20,150 --> 00:11:20,160
+Max function in this line we are
+ 
+
+647
+00:11:20,160 --> 00:11:22,069
+Max function in this line we are
+dividing the current sum of returns by
+
+648
+00:11:22,069 --> 00:11:22,079
+dividing the current sum of returns by
+ 
+
+649
+00:11:22,079 --> 00:11:24,410
+dividing the current sum of returns by
+the max sum we've seen so far we
+
+650
+00:11:24,410 --> 00:11:24,420
+the max sum we've seen so far we
+ 
+
+651
+00:11:24,420 --> 00:11:26,690
+the max sum we've seen so far we
+subtract one from this quotient this
+
+652
+00:11:26,690 --> 00:11:26,700
+subtract one from this quotient this
+ 
+
+653
+00:11:26,700 --> 00:11:28,910
+subtract one from this quotient this
+gives us the percentage drawdown at each
+
+654
+00:11:28,910 --> 00:11:28,920
+gives us the percentage drawdown at each
+ 
+
+655
+00:11:28,920 --> 00:11:31,610
+gives us the percentage drawdown at each
+candle we Square this percentage and sum
+
+656
+00:11:31,610 --> 00:11:31,620
+candle we Square this percentage and sum
+ 
+
+657
+00:11:31,620 --> 00:11:33,949
+candle we Square this percentage and sum
+the squared percentage at each bar this
+
+658
+00:11:33,949 --> 00:11:33,959
+the squared percentage at each bar this
+ 
+
+659
+00:11:33,959 --> 00:11:36,650
+the squared percentage at each bar this
+is the ulcer index we complete the ulcer
+
+660
+00:11:36,650 --> 00:11:36,660
+is the ulcer index we complete the ulcer
+ 
+
+661
+00:11:36,660 --> 00:11:38,389
+is the ulcer index we complete the ulcer
+index by dividing by the size of the
+
+662
+00:11:38,389 --> 00:11:38,399
+index by dividing by the size of the
+ 
+
+663
+00:11:38,399 --> 00:11:40,610
+index by dividing by the size of the
+array and taking the square root the
+
+664
+00:11:40,610 --> 00:11:40,620
+array and taking the square root the
+ 
+
+665
+00:11:40,620 --> 00:11:42,889
+array and taking the square root the
+Martin ratio is the total return divided
+
+666
+00:11:42,889 --> 00:11:42,899
+Martin ratio is the total return divided
+ 
+
+667
+00:11:42,899 --> 00:11:45,290
+Martin ratio is the total return divided
+by the ulcer index if we flag these
+
+668
+00:11:45,290 --> 00:11:45,300
+by the ulcer index if we flag these
+ 
+
+669
+00:11:45,300 --> 00:11:47,509
+by the ulcer index if we flag these
+returns as a short pattern earlier we
+
+670
+00:11:47,509 --> 00:11:47,519
+returns as a short pattern earlier we
+ 
+
+671
+00:11:47,519 --> 00:11:49,730
+returns as a short pattern earlier we
+set the Martin ratio to negative this
+
+672
+00:11:49,730 --> 00:11:49,740
+set the Martin ratio to negative this
+ 
+
+673
+00:11:49,740 --> 00:11:51,710
+set the Martin ratio to negative this
+way the best long pattern will be the
+
+674
+00:11:51,710 --> 00:11:51,720
+way the best long pattern will be the
+ 
+
+675
+00:11:51,720 --> 00:11:53,690
+way the best long pattern will be the
+maximum value found and the best short
+
+676
+00:11:53,690 --> 00:11:53,700
+maximum value found and the best short
+ 
+
+677
+00:11:53,700 --> 00:11:55,610
+maximum value found and the best short
+pattern will be the minimum value found
+
+678
+00:11:55,610 --> 00:11:55,620
+pattern will be the minimum value found
+ 
+
+679
+00:11:55,620 --> 00:11:58,610
+pattern will be the minimum value found
+back to the train function once more we
+
+680
+00:11:58,610 --> 00:11:58,620
+back to the train function once more we
+ 
+
+681
+00:11:58,620 --> 00:12:00,350
+back to the train function once more we
+find our final margin ratio with this
+
+682
+00:12:00,350 --> 00:12:00,360
+find our final margin ratio with this
+ 
+
+683
+00:12:00,360 --> 00:12:02,870
+find our final margin ratio with this
+function get total performance this
+
+684
+00:12:02,870 --> 00:12:02,880
+function get total performance this
+ 
+
+685
+00:12:02,880 --> 00:12:04,610
+function get total performance this
+function is built to handle selecting
+
+686
+00:12:04,610 --> 00:12:04,620
+function is built to handle selecting
+ 
+
+687
+00:12:04,620 --> 00:12:06,590
+function is built to handle selecting
+multiple long and short patterns if you
+
+688
+00:12:06,590 --> 00:12:06,600
+multiple long and short patterns if you
+ 
+
+689
+00:12:06,600 --> 00:12:08,389
+multiple long and short patterns if you
+want to experiment but it works just
+
+690
+00:12:08,389 --> 00:12:08,399
+want to experiment but it works just
+ 
+
+691
+00:12:08,399 --> 00:12:11,269
+want to experiment but it works just
+fine with just the one selected here we
+
+692
+00:12:11,269 --> 00:12:11,279
+fine with just the one selected here we
+ 
+
+693
+00:12:11,279 --> 00:12:13,310
+fine with just the one selected here we
+create a long and short signal of zeros
+
+694
+00:12:13,310 --> 00:12:13,320
+create a long and short signal of zeros
+ 
+
+695
+00:12:13,320 --> 00:12:15,829
+create a long and short signal of zeros
+for the length of the data we Loop
+
+696
+00:12:15,829 --> 00:12:15,839
+for the length of the data we Loop
+ 
+
+697
+00:12:15,839 --> 00:12:18,230
+for the length of the data we Loop
+through each cluster if the cluster is a
+
+698
+00:12:18,230 --> 00:12:18,240
+through each cluster if the cluster is a
+ 
+
+699
+00:12:18,240 --> 00:12:20,389
+through each cluster if the cluster is a
+member of the selected long patterns we
+
+700
+00:12:20,389 --> 00:12:20,399
+member of the selected long patterns we
+ 
+
+701
+00:12:20,399 --> 00:12:22,069
+member of the selected long patterns we
+add the cluster signal to the long
+
+702
+00:12:22,069 --> 00:12:22,079
+add the cluster signal to the long
+ 
+
+703
+00:12:22,079 --> 00:12:24,470
+add the cluster signal to the long
+signal if the cluster is a member of the
+
+704
+00:12:24,470 --> 00:12:24,480
+signal if the cluster is a member of the
+ 
+
+705
+00:12:24,480 --> 00:12:26,210
+signal if the cluster is a member of the
+selected short patterns we add the
+
+706
+00:12:26,210 --> 00:12:26,220
+selected short patterns we add the
+ 
+
+707
+00:12:26,220 --> 00:12:28,550
+selected short patterns we add the
+cluster signal to the short signal we
+
+708
+00:12:28,550 --> 00:12:28,560
+cluster signal to the short signal we
+ 
+
+709
+00:12:28,560 --> 00:12:30,230
+cluster signal to the short signal we
+divide the signals by the number of
+
+710
+00:12:30,230 --> 00:12:30,240
+divide the signals by the number of
+ 
+
+711
+00:12:30,240 --> 00:12:32,750
+divide the signals by the number of
+selected patterns in this case it's just
+
+712
+00:12:32,750 --> 00:12:32,760
+selected patterns in this case it's just
+ 
+
+713
+00:12:32,760 --> 00:12:35,509
+selected patterns in this case it's just
+one so no effect we multiply the short
+
+714
+00:12:35,509 --> 00:12:35,519
+one so no effect we multiply the short
+ 
+
+715
+00:12:35,519 --> 00:12:37,910
+one so no effect we multiply the short
+signal by negative one to flip the signs
+
+716
+00:12:37,910 --> 00:12:37,920
+signal by negative one to flip the signs
+ 
+
+717
+00:12:37,920 --> 00:12:40,370
+signal by negative one to flip the signs
+we combine the signals by adding them we
+
+718
+00:12:40,370 --> 00:12:40,380
+we combine the signals by adding them we
+ 
+
+719
+00:12:40,380 --> 00:12:42,230
+we combine the signals by adding them we
+multiply the combined signal by the
+
+720
+00:12:42,230 --> 00:12:42,240
+multiply the combined signal by the
+ 
+
+721
+00:12:42,240 --> 00:12:44,389
+multiply the combined signal by the
+returns then we pass these combined
+
+722
+00:12:44,389 --> 00:12:44,399
+returns then we pass these combined
+ 
+
+723
+00:12:44,399 --> 00:12:46,430
+returns then we pass these combined
+returns to the get Martin function we
+
+724
+00:12:46,430 --> 00:12:46,440
+returns to the get Martin function we
+ 
+
+725
+00:12:46,440 --> 00:12:48,470
+returns to the get Martin function we
+covered earlier at this point we found a
+
+726
+00:12:48,470 --> 00:12:48,480
+covered earlier at this point we found a
+ 
+
+727
+00:12:48,480 --> 00:12:50,329
+covered earlier at this point we found a
+pattern for trading long and a pattern
+
+728
+00:12:50,329 --> 00:12:50,339
+pattern for trading long and a pattern
+ 
+
+729
+00:12:50,339 --> 00:12:52,310
+pattern for trading long and a pattern
+for trading short from the data let's
+
+730
+00:12:52,310 --> 00:12:52,320
+for trading short from the data let's
+ 
+
+731
+00:12:52,320 --> 00:12:54,410
+for trading short from the data let's
+run this program on two years of hourly
+
+732
+00:12:54,410 --> 00:12:54,420
+run this program on two years of hourly
+ 
+
+733
+00:12:54,420 --> 00:12:56,210
+run this program on two years of hourly
+Bitcoin data from the beginning of 2018
+
+734
+00:12:56,210 --> 00:12:56,220
+Bitcoin data from the beginning of 2018
+ 
+
+735
+00:12:56,220 --> 00:12:59,449
+Bitcoin data from the beginning of 2018
+to the end of 2019 the silhouette method
+
+736
+00:12:59,449 --> 00:12:59,459
+to the end of 2019 the silhouette method
+ 
+
+737
+00:12:59,459 --> 00:13:01,850
+to the end of 2019 the silhouette method
+decided that 16 clusters was the best
+
+738
+00:13:01,850 --> 00:13:01,860
+decided that 16 clusters was the best
+ 
+
+739
+00:13:01,860 --> 00:13:04,129
+decided that 16 clusters was the best
+amount here are the cluster centers of
+
+740
+00:13:04,129 --> 00:13:04,139
+amount here are the cluster centers of
+ 
+
+741
+00:13:04,139 --> 00:13:06,110
+amount here are the cluster centers of
+the long and short patterns discovered
+
+742
+00:13:06,110 --> 00:13:06,120
+the long and short patterns discovered
+ 
+
+743
+00:13:06,120 --> 00:13:07,730
+the long and short patterns discovered
+the long pattern is shown in green
+
+744
+00:13:07,730 --> 00:13:07,740
+the long pattern is shown in green
+ 
+
+745
+00:13:07,740 --> 00:13:09,590
+the long pattern is shown in green
+screen while the short pattern is shown
+
+746
+00:13:09,590 --> 00:13:09,600
+screen while the short pattern is shown
+ 
+
+747
+00:13:09,600 --> 00:13:11,750
+screen while the short pattern is shown
+in red here is every member of the
+
+748
+00:13:11,750 --> 00:13:11,760
+in red here is every member of the
+ 
+
+749
+00:13:11,760 --> 00:13:13,850
+in red here is every member of the
+Clusters found in the test period the
+
+750
+00:13:13,850 --> 00:13:13,860
+Clusters found in the test period the
+ 
+
+751
+00:13:13,860 --> 00:13:15,889
+Clusters found in the test period the
+patterns are fairly loose there is quite
+
+752
+00:13:15,889 --> 00:13:15,899
+patterns are fairly loose there is quite
+ 
+
+753
+00:13:15,899 --> 00:13:17,810
+patterns are fairly loose there is quite
+a bit of variation around the cluster
+
+754
+00:13:17,810 --> 00:13:17,820
+a bit of variation around the cluster
+ 
+
+755
+00:13:17,820 --> 00:13:19,790
+a bit of variation around the cluster
+centers here are the cumulative log
+
+756
+00:13:19,790 --> 00:13:19,800
+centers here are the cumulative log
+ 
+
+757
+00:13:19,800 --> 00:13:22,250
+centers here are the cumulative log
+returns of the long short and combined
+
+758
+00:13:22,250 --> 00:13:22,260
+returns of the long short and combined
+ 
+
+759
+00:13:22,260 --> 00:13:24,590
+returns of the long short and combined
+patterns on the in-sample data they look
+
+760
+00:13:24,590 --> 00:13:24,600
+patterns on the in-sample data they look
+ 
+
+761
+00:13:24,600 --> 00:13:26,569
+patterns on the in-sample data they look
+pretty good but these are in Sample
+
+762
+00:13:26,569 --> 00:13:26,579
+pretty good but these are in Sample
+ 
+
+763
+00:13:26,579 --> 00:13:28,670
+pretty good but these are in Sample
+results we selected these patterns
+
+764
+00:13:28,670 --> 00:13:28,680
+results we selected these patterns
+ 
+
+765
+00:13:28,680 --> 00:13:30,710
+results we selected these patterns
+because they were the best so there is a
+
+766
+00:13:30,710 --> 00:13:30,720
+because they were the best so there is a
+ 
+
+767
+00:13:30,720 --> 00:13:32,569
+because they were the best so there is a
+strong selection bias in these results
+
+768
+00:13:32,569 --> 00:13:32,579
+strong selection bias in these results
+ 
+
+769
+00:13:32,579 --> 00:13:34,790
+strong selection bias in these results
+to compare the strength of the selection
+
+770
+00:13:34,790 --> 00:13:34,800
+to compare the strength of the selection
+ 
+
+771
+00:13:34,800 --> 00:13:37,069
+to compare the strength of the selection
+bias versus the strength of the actual
+
+772
+00:13:37,069 --> 00:13:37,079
+bias versus the strength of the actual
+ 
+
+773
+00:13:37,079 --> 00:13:38,990
+bias versus the strength of the actual
+patterns in the data we will perform a
+
+774
+00:13:38,990 --> 00:13:39,000
+patterns in the data we will perform a
+ 
+
+775
+00:13:39,000 --> 00:13:41,449
+patterns in the data we will perform a
+Monte Carlo permutation test to do this
+
+776
+00:13:41,449 --> 00:13:41,459
+Monte Carlo permutation test to do this
+ 
+
+777
+00:13:41,459 --> 00:13:43,310
+Monte Carlo permutation test to do this
+we will permute the price returns to
+
+778
+00:13:43,310 --> 00:13:43,320
+we will permute the price returns to
+ 
+
+779
+00:13:43,320 --> 00:13:45,470
+we will permute the price returns to
+create a new permuted price path this
+
+780
+00:13:45,470 --> 00:13:45,480
+create a new permuted price path this
+ 
+
+781
+00:13:45,480 --> 00:13:47,269
+create a new permuted price path this
+permeated price path has an identical
+
+782
+00:13:47,269 --> 00:13:47,279
+permeated price path has an identical
+ 
+
+783
+00:13:47,279 --> 00:13:49,009
+permeated price path has an identical
+return distribution but all the
+
+784
+00:13:49,009 --> 00:13:49,019
+return distribution but all the
+ 
+
+785
+00:13:49,019 --> 00:13:50,990
+return distribution but all the
+legitimate patterns that may or may not
+
+786
+00:13:50,990 --> 00:13:51,000
+legitimate patterns that may or may not
+ 
+
+787
+00:13:51,000 --> 00:13:52,790
+legitimate patterns that may or may not
+be present on the actual path are
+
+788
+00:13:52,790 --> 00:13:52,800
+be present on the actual path are
+ 
+
+789
+00:13:52,800 --> 00:13:54,590
+be present on the actual path are
+destroyed all that remains in the
+
+790
+00:13:54,590 --> 00:13:54,600
+destroyed all that remains in the
+ 
+
+791
+00:13:54,600 --> 00:13:56,990
+destroyed all that remains in the
+permitted price path isn't always we
+
+792
+00:13:56,990 --> 00:13:57,000
+permitted price path isn't always we
+ 
+
+793
+00:13:57,000 --> 00:13:58,970
+permitted price path isn't always we
+will run our entire procedure again on
+
+794
+00:13:58,970 --> 00:13:58,980
+will run our entire procedure again on
+ 
+
+795
+00:13:58,980 --> 00:14:00,829
+will run our entire procedure again on
+this primitive price path build our
+
+796
+00:14:00,829 --> 00:14:00,839
+this primitive price path build our
+ 
+
+797
+00:14:00,839 --> 00:14:02,269
+this primitive price path build our
+unique perceptually important Point
+
+798
+00:14:02,269 --> 00:14:02,279
+unique perceptually important Point
+ 
+
+799
+00:14:02,279 --> 00:14:04,850
+unique perceptually important Point
+patterns cluster them and select the
+
+800
+00:14:04,850 --> 00:14:04,860
+patterns cluster them and select the
+ 
+
+801
+00:14:04,860 --> 00:14:07,069
+patterns cluster them and select the
+best performing clusters we will compare
+
+802
+00:14:07,069 --> 00:14:07,079
+best performing clusters we will compare
+ 
+
+803
+00:14:07,079 --> 00:14:09,350
+best performing clusters we will compare
+the Martin ratio we find on the permuted
+
+804
+00:14:09,350 --> 00:14:09,360
+the Martin ratio we find on the permuted
+ 
+
+805
+00:14:09,360 --> 00:14:11,150
+the Martin ratio we find on the permuted
+path to the one we found on the actual
+
+806
+00:14:11,150 --> 00:14:11,160
+path to the one we found on the actual
+ 
+
+807
+00:14:11,160 --> 00:14:13,490
+path to the one we found on the actual
+price path if the result we find on the
+
+808
+00:14:13,490 --> 00:14:13,500
+price path if the result we find on the
+ 
+
+809
+00:14:13,500 --> 00:14:15,230
+price path if the result we find on the
+permitted price path is weaker than what
+
+810
+00:14:15,230 --> 00:14:15,240
+permitted price path is weaker than what
+ 
+
+811
+00:14:15,240 --> 00:14:17,269
+permitted price path is weaker than what
+we find on the actual price path then
+
+812
+00:14:17,269 --> 00:14:17,279
+we find on the actual price path then
+ 
+
+813
+00:14:17,279 --> 00:14:19,069
+we find on the actual price path then
+that serves as evidence that there are
+
+814
+00:14:19,069 --> 00:14:19,079
+that serves as evidence that there are
+ 
+
+815
+00:14:19,079 --> 00:14:21,110
+that serves as evidence that there are
+legitimate patterns in the actual data
+
+816
+00:14:21,110 --> 00:14:21,120
+legitimate patterns in the actual data
+ 
+
+817
+00:14:21,120 --> 00:14:23,150
+legitimate patterns in the actual data
+the more times we permeate the price and
+
+818
+00:14:23,150 --> 00:14:23,160
+the more times we permeate the price and
+ 
+
+819
+00:14:23,160 --> 00:14:25,670
+the more times we permeate the price and
+do this test the more evidence we gain I
+
+820
+00:14:25,670 --> 00:14:25,680
+do this test the more evidence we gain I
+ 
+
+821
+00:14:25,680 --> 00:14:28,009
+do this test the more evidence we gain I
+generated 100 permutations of the price
+
+822
+00:14:28,009 --> 00:14:28,019
+generated 100 permutations of the price
+ 
+
+823
+00:14:28,019 --> 00:14:30,110
+generated 100 permutations of the price
+from the start of 2018 to the end of
+
+824
+00:14:30,110 --> 00:14:30,120
+from the start of 2018 to the end of
+ 
+
+825
+00:14:30,120 --> 00:14:32,870
+from the start of 2018 to the end of
+2019 and found the Martin ratio for each
+
+826
+00:14:32,870 --> 00:14:32,880
+2019 and found the Martin ratio for each
+ 
+
+827
+00:14:32,880 --> 00:14:35,269
+2019 and found the Martin ratio for each
+of them here are the Monte Carlo test
+
+828
+00:14:35,269 --> 00:14:35,279
+of them here are the Monte Carlo test
+ 
+
+829
+00:14:35,279 --> 00:14:37,490
+of them here are the Monte Carlo test
+results the Martin ratio is found on
+
+830
+00:14:37,490 --> 00:14:37,500
+results the Martin ratio is found on
+ 
+
+831
+00:14:37,500 --> 00:14:39,590
+results the Martin ratio is found on
+each of the permutations is displayed as
+
+832
+00:14:39,590 --> 00:14:39,600
+each of the permutations is displayed as
+ 
+
+833
+00:14:39,600 --> 00:14:41,750
+each of the permutations is displayed as
+a histogram while the Martin ratio on
+
+834
+00:14:41,750 --> 00:14:41,760
+a histogram while the Martin ratio on
+ 
+
+835
+00:14:41,760 --> 00:14:43,910
+a histogram while the Martin ratio on
+the actual price is displayed as a red
+
+836
+00:14:43,910 --> 00:14:43,920
+the actual price is displayed as a red
+ 
+
+837
+00:14:43,920 --> 00:14:46,370
+the actual price is displayed as a red
+line the actual data is ahead of all the
+
+838
+00:14:46,370 --> 00:14:46,380
+line the actual data is ahead of all the
+ 
+
+839
+00:14:46,380 --> 00:14:49,069
+line the actual data is ahead of all the
+permutations this is good evidence that
+
+840
+00:14:49,069 --> 00:14:49,079
+permutations this is good evidence that
+ 
+
+841
+00:14:49,079 --> 00:14:50,569
+permutations this is good evidence that
+there is something present in the actual
+
+842
+00:14:50,569 --> 00:14:50,579
+there is something present in the actual
+ 
+
+843
+00:14:50,579 --> 00:14:52,490
+there is something present in the actual
+data that is not present in the price
+
+844
+00:14:52,490 --> 00:14:52,500
+data that is not present in the price
+ 
+
+845
+00:14:52,500 --> 00:14:54,829
+data that is not present in the price
+permutations let's look at the code for
+
+846
+00:14:54,829 --> 00:14:54,839
+permutations let's look at the code for
+ 
+
+847
+00:14:54,839 --> 00:14:57,290
+permutations let's look at the code for
+the Monte Carlo test the Monte Carlo
+
+848
+00:14:57,290 --> 00:14:57,300
+the Monte Carlo test the Monte Carlo
+ 
+
+849
+00:14:57,300 --> 00:14:59,329
+the Monte Carlo test the Monte Carlo
+permutation function is controlled by
+
+850
+00:14:59,329 --> 00:14:59,339
+permutation function is controlled by
+ 
+
+851
+00:14:59,339 --> 00:15:01,970
+permutation function is controlled by
+this parameter and Reps the number of
+
+852
+00:15:01,970 --> 00:15:01,980
+this parameter and Reps the number of
+ 
+
+853
+00:15:01,980 --> 00:15:04,790
+this parameter and Reps the number of
+Monte Carlo repetitions we will use it
+
+854
+00:15:04,790 --> 00:15:04,800
+Monte Carlo repetitions we will use it
+ 
+
+855
+00:15:04,800 --> 00:15:07,009
+Monte Carlo repetitions we will use it
+defaults to negative 1 which means we
+
+856
+00:15:07,009 --> 00:15:07,019
+defaults to negative 1 which means we
+ 
+
+857
+00:15:07,019 --> 00:15:08,750
+defaults to negative 1 which means we
+don't do the amount Monte Carlo test
+
+858
+00:15:08,750 --> 00:15:08,760
+don't do the amount Monte Carlo test
+ 
+
+859
+00:15:08,760 --> 00:15:11,030
+don't do the amount Monte Carlo test
+after we have finished the entire
+
+860
+00:15:11,030 --> 00:15:11,040
+after we have finished the entire
+ 
+
+861
+00:15:11,040 --> 00:15:13,430
+after we have finished the entire
+procedure on real data we are left with
+
+862
+00:15:13,430 --> 00:15:13,440
+procedure on real data we are left with
+ 
+
+863
+00:15:13,440 --> 00:15:15,710
+procedure on real data we are left with
+the final Martin ratio of the combined
+
+864
+00:15:15,710 --> 00:15:15,720
+the final Martin ratio of the combined
+ 
+
+865
+00:15:15,720 --> 00:15:18,530
+the final Martin ratio of the combined
+best long and short pattern we save this
+
+866
+00:15:18,530 --> 00:15:18,540
+best long and short pattern we save this
+ 
+
+867
+00:15:18,540 --> 00:15:20,990
+best long and short pattern we save this
+in the variable fit Martin we return
+
+868
+00:15:20,990 --> 00:15:21,000
+in the variable fit Martin we return
+ 
+
+869
+00:15:21,000 --> 00:15:24,050
+in the variable fit Martin we return
+here if the Monte Carlo test is disabled
+
+870
+00:15:24,050 --> 00:15:24,060
+here if the Monte Carlo test is disabled
+ 
+
+871
+00:15:24,060 --> 00:15:26,509
+here if the Monte Carlo test is disabled
+we Loop for each of the repetitions
+
+872
+00:15:26,509 --> 00:15:26,519
+we Loop for each of the repetitions
+ 
+
+873
+00:15:26,519 --> 00:15:28,790
+we Loop for each of the repetitions
+requested these two lines Shuffle the
+
+874
+00:15:28,790 --> 00:15:28,800
+requested these two lines Shuffle the
+ 
+
+875
+00:15:28,800 --> 00:15:31,189
+requested these two lines Shuffle the
+log returns of the original data we
+
+876
+00:15:31,189 --> 00:15:31,199
+log returns of the original data we
+ 
+
+877
+00:15:31,199 --> 00:15:32,870
+log returns of the original data we
+concatenate the first value of the
+
+878
+00:15:32,870 --> 00:15:32,880
+concatenate the first value of the
+ 
+
+879
+00:15:32,880 --> 00:15:34,850
+concatenate the first value of the
+original array and the shuffled returns
+
+880
+00:15:34,850 --> 00:15:34,860
+original array and the shuffled returns
+ 
+
+881
+00:15:34,860 --> 00:15:37,430
+original array and the shuffled returns
+we set the class variable data as the
+
+882
+00:15:37,430 --> 00:15:37,440
+we set the class variable data as the
+ 
+
+883
+00:15:37,440 --> 00:15:39,769
+we set the class variable data as the
+cumulative sum of the shuffled returns
+
+884
+00:15:39,769 --> 00:15:39,779
+cumulative sum of the shuffled returns
+ 
+
+885
+00:15:39,779 --> 00:15:41,990
+cumulative sum of the shuffled returns
+now we do everything exactly the same as
+
+886
+00:15:41,990 --> 00:15:42,000
+now we do everything exactly the same as
+ 
+
+887
+00:15:42,000 --> 00:15:43,970
+now we do everything exactly the same as
+we did before but this time we are using
+
+888
+00:15:43,970 --> 00:15:43,980
+we did before but this time we are using
+ 
+
+889
+00:15:43,980 --> 00:15:46,430
+we did before but this time we are using
+permuted data we find the unique pit
+
+890
+00:15:46,430 --> 00:15:46,440
+permuted data we find the unique pit
+ 
+
+891
+00:15:46,440 --> 00:15:49,189
+permuted data we find the unique pit
+patterns cluster them find the cluster
+
+892
+00:15:49,189 --> 00:15:49,199
+patterns cluster them find the cluster
+ 
+
+893
+00:15:49,199 --> 00:15:51,949
+patterns cluster them find the cluster
+signals select the best then we get our
+
+894
+00:15:51,949 --> 00:15:51,959
+signals select the best then we get our
+ 
+
+895
+00:15:51,959 --> 00:15:53,629
+signals select the best then we get our
+final performance figure on the
+
+896
+00:15:53,629 --> 00:15:53,639
+final performance figure on the
+ 
+
+897
+00:15:53,639 --> 00:15:55,610
+final performance figure on the
+permeated data this is what we compare
+
+898
+00:15:55,610 --> 00:15:55,620
+permeated data this is what we compare
+ 
+
+899
+00:15:55,620 --> 00:15:57,530
+permeated data this is what we compare
+to the performance figure found on real
+
+900
+00:15:57,530 --> 00:15:57,540
+to the performance figure found on real
+ 
+
+901
+00:15:57,540 --> 00:15:59,810
+to the performance figure found on real
+data we save this performance figure
+
+902
+00:15:59,810 --> 00:15:59,820
+data we save this performance figure
+ 
+
+903
+00:15:59,820 --> 00:16:01,790
+data we save this performance figure
+from the permuted data into this list
+
+904
+00:16:01,790 --> 00:16:01,800
+from the permuted data into this list
+ 
+
+905
+00:16:01,800 --> 00:16:03,949
+from the permuted data into this list
+we've seen that our data mining process
+
+906
+00:16:03,949 --> 00:16:03,959
+we've seen that our data mining process
+ 
+
+907
+00:16:03,959 --> 00:16:05,689
+we've seen that our data mining process
+is finding something stronger on real
+
+908
+00:16:05,689 --> 00:16:05,699
+is finding something stronger on real
+ 
+
+909
+00:16:05,699 --> 00:16:08,269
+is finding something stronger on real
+data than it finds on noise or muted
+
+910
+00:16:08,269 --> 00:16:08,279
+data than it finds on noise or muted
+ 
+
+911
+00:16:08,279 --> 00:16:10,370
+data than it finds on noise or muted
+data so at this point we'll try using
+
+912
+00:16:10,370 --> 00:16:10,380
+data so at this point we'll try using
+ 
+
+913
+00:16:10,380 --> 00:16:12,590
+data so at this point we'll try using
+our found patterns on out of sample data
+
+914
+00:16:12,590 --> 00:16:12,600
+our found patterns on out of sample data
+ 
+
+915
+00:16:12,600 --> 00:16:15,050
+our found patterns on out of sample data
+we will use a walk forward test to see
+
+916
+00:16:15,050 --> 00:16:15,060
+we will use a walk forward test to see
+ 
+
+917
+00:16:15,060 --> 00:16:16,790
+we will use a walk forward test to see
+if our patterns work on out of sample
+
+918
+00:16:16,790 --> 00:16:16,800
+if our patterns work on out of sample
+ 
+
+919
+00:16:16,800 --> 00:16:19,189
+if our patterns work on out of sample
+data I'll again use hourly Bitcoin data
+
+920
+00:16:19,189 --> 00:16:19,199
+data I'll again use hourly Bitcoin data
+ 
+
+921
+00:16:19,199 --> 00:16:20,990
+data I'll again use hourly Bitcoin data
+but from the beginning of 2018 to the
+
+922
+00:16:20,990 --> 00:16:21,000
+but from the beginning of 2018 to the
+ 
+
+923
+00:16:21,000 --> 00:16:23,629
+but from the beginning of 2018 to the
+end of 2022 we will train on two years
+
+924
+00:16:23,629 --> 00:16:23,639
+end of 2022 we will train on two years
+ 
+
+925
+00:16:23,639 --> 00:16:26,509
+end of 2022 we will train on two years
+of data and test on one year of data so
+
+926
+00:16:26,509 --> 00:16:26,519
+of data and test on one year of data so
+ 
+
+927
+00:16:26,519 --> 00:16:28,490
+of data and test on one year of data so
+in this case finding patterns with 2018
+
+928
+00:16:28,490 --> 00:16:28,500
+in this case finding patterns with 2018
+ 
+
+929
+00:16:28,500 --> 00:16:31,970
+in this case finding patterns with 2018
+and 2019 data then testing them on 2020
+
+930
+00:16:31,970 --> 00:16:31,980
+and 2019 data then testing them on 2020
+ 
+
+931
+00:16:31,980 --> 00:16:34,910
+and 2019 data then testing them on 2020
+then training on 2019 and 2020 and
+
+932
+00:16:34,910 --> 00:16:34,920
+then training on 2019 and 2020 and
+ 
+
+933
+00:16:34,920 --> 00:16:38,269
+then training on 2019 and 2020 and
+testing on 2021 and so on let's look at
+
+934
+00:16:38,269 --> 00:16:38,279
+testing on 2021 and so on let's look at
+ 
+
+935
+00:16:38,279 --> 00:16:39,829
+testing on 2021 and so on let's look at
+the code for this and then I'll show the
+
+936
+00:16:39,829 --> 00:16:39,839
+the code for this and then I'll show the
+ 
+
+937
+00:16:39,839 --> 00:16:41,810
+the code for this and then I'll show the
+results before we go over the walk
+
+938
+00:16:41,810 --> 00:16:41,820
+results before we go over the walk
+ 
+
+939
+00:16:41,820 --> 00:16:43,490
+results before we go over the walk
+forward code there is one more function
+
+940
+00:16:43,490 --> 00:16:43,500
+forward code there is one more function
+ 
+
+941
+00:16:43,500 --> 00:16:45,769
+forward code there is one more function
+we need to go over in the pit pattern
+
+942
+00:16:45,769 --> 00:16:45,779
+we need to go over in the pit pattern
+ 
+
+943
+00:16:45,779 --> 00:16:47,930
+we need to go over in the pit pattern
+minor class the class we've been looking
+
+944
+00:16:47,930 --> 00:16:47,940
+minor class the class we've been looking
+ 
+
+945
+00:16:47,940 --> 00:16:50,990
+minor class the class we've been looking
+at so far this function predict is for
+
+946
+00:16:50,990 --> 00:16:51,000
+at so far this function predict is for
+ 
+
+947
+00:16:51,000 --> 00:16:53,629
+at so far this function predict is for
+out of sample use it takes a list of
+
+948
+00:16:53,629 --> 00:16:53,639
+out of sample use it takes a list of
+ 
+
+949
+00:16:53,639 --> 00:16:55,790
+out of sample use it takes a list of
+perceptually important points as input
+
+950
+00:16:55,790 --> 00:16:55,800
+perceptually important points as input
+ 
+
+951
+00:16:55,800 --> 00:16:58,730
+perceptually important points as input
+we z-score normalize the input then we
+
+952
+00:16:58,730 --> 00:16:58,740
+we z-score normalize the input then we
+ 
+
+953
+00:16:58,740 --> 00:17:01,009
+we z-score normalize the input then we
+Loop through all the cluster centers and
+
+954
+00:17:01,009 --> 00:17:01,019
+Loop through all the cluster centers and
+ 
+
+955
+00:17:01,019 --> 00:17:02,870
+Loop through all the cluster centers and
+find the cluster center that is the
+
+956
+00:17:02,870 --> 00:17:02,880
+find the cluster center that is the
+ 
+
+957
+00:17:02,880 --> 00:17:05,329
+find the cluster center that is the
+closest to the input this line here
+
+958
+00:17:05,329 --> 00:17:05,339
+closest to the input this line here
+ 
+
+959
+00:17:05,339 --> 00:17:07,370
+closest to the input this line here
+finds the euclidean distance between the
+
+960
+00:17:07,370 --> 00:17:07,380
+finds the euclidean distance between the
+ 
+
+961
+00:17:07,380 --> 00:17:09,770
+finds the euclidean distance between the
+in input and the center if the closest
+
+962
+00:17:09,770 --> 00:17:09,780
+in input and the center if the closest
+ 
+
+963
+00:17:09,780 --> 00:17:11,689
+in input and the center if the closest
+Center is one of the selected long
+
+964
+00:17:11,689 --> 00:17:11,699
+Center is one of the selected long
+ 
+
+965
+00:17:11,699 --> 00:17:14,150
+Center is one of the selected long
+patterns we return one at the closest
+
+966
+00:17:14,150 --> 00:17:14,160
+patterns we return one at the closest
+ 
+
+967
+00:17:14,160 --> 00:17:16,370
+patterns we return one at the closest
+Center is one of the short patterns we
+
+968
+00:17:16,370 --> 00:17:16,380
+Center is one of the short patterns we
+ 
+
+969
+00:17:16,380 --> 00:17:18,590
+Center is one of the short patterns we
+return negative one otherwise we return
+
+970
+00:17:18,590 --> 00:17:18,600
+return negative one otherwise we return
+ 
+
+971
+00:17:18,600 --> 00:17:21,110
+return negative one otherwise we return
+zero here is the script for the walk
+
+972
+00:17:21,110 --> 00:17:21,120
+zero here is the script for the walk
+ 
+
+973
+00:17:21,120 --> 00:17:24,110
+zero here is the script for the walk
+forward test we load data in from a CSV
+
+974
+00:17:24,110 --> 00:17:24,120
+forward test we load data in from a CSV
+ 
+
+975
+00:17:24,120 --> 00:17:26,329
+forward test we load data in from a CSV
+then convert the data into logarithmic
+
+976
+00:17:26,329 --> 00:17:26,339
+then convert the data into logarithmic
+ 
+
+977
+00:17:26,339 --> 00:17:29,090
+then convert the data into logarithmic
+prices we get the closing price array we
+
+978
+00:17:29,090 --> 00:17:29,100
+prices we get the closing price array we
+ 
+
+979
+00:17:29,100 --> 00:17:31,730
+prices we get the closing price array we
+create an instance of this class WF pip
+
+980
+00:17:31,730 --> 00:17:31,740
+create an instance of this class WF pip
+ 
+
+981
+00:17:31,740 --> 00:17:33,830
+create an instance of this class WF pip
+minor which is short for walk forward
+
+982
+00:17:33,830 --> 00:17:33,840
+minor which is short for walk forward
+ 
+
+983
+00:17:33,840 --> 00:17:36,110
+minor which is short for walk forward
+perceptually important Point minor we
+
+984
+00:17:36,110 --> 00:17:36,120
+perceptually important Point minor we
+ 
+
+985
+00:17:36,120 --> 00:17:37,850
+perceptually important Point minor we
+will look at this class in a second but
+
+986
+00:17:37,850 --> 00:17:37,860
+will look at this class in a second but
+ 
+
+987
+00:17:37,860 --> 00:17:39,529
+will look at this class in a second but
+we pass in the parameters for the
+
+988
+00:17:39,529 --> 00:17:39,539
+we pass in the parameters for the
+ 
+
+989
+00:17:39,539 --> 00:17:41,990
+we pass in the parameters for the
+pattern mining npips look back and hold
+
+990
+00:17:41,990 --> 00:17:42,000
+pattern mining npips look back and hold
+ 
+
+991
+00:17:42,000 --> 00:17:44,029
+pattern mining npips look back and hold
+period we have already discussed the
+
+992
+00:17:44,029 --> 00:17:44,039
+period we have already discussed the
+ 
+
+993
+00:17:44,039 --> 00:17:46,130
+period we have already discussed the
+train size is set to two years and
+
+994
+00:17:46,130 --> 00:17:46,140
+train size is set to two years and
+ 
+
+995
+00:17:46,140 --> 00:17:48,890
+train size is set to two years and
+hourly data and the step size is set to
+
+996
+00:17:48,890 --> 00:17:48,900
+hourly data and the step size is set to
+ 
+
+997
+00:17:48,900 --> 00:17:51,409
+hourly data and the step size is set to
+one year in hourly data we create a
+
+998
+00:17:51,409 --> 00:17:51,419
+one year in hourly data we create a
+ 
+
+999
+00:17:51,419 --> 00:17:53,450
+one year in hourly data we create a
+signal list of zeros the same size as
+
+1000
+00:17:53,450 --> 00:17:53,460
+signal list of zeros the same size as
+ 
+
+1001
+00:17:53,460 --> 00:17:55,850
+signal list of zeros the same size as
+the array we Loop through each index in
+
+1002
+00:17:55,850 --> 00:17:55,860
+the array we Loop through each index in
+ 
+
+1003
+00:17:55,860 --> 00:17:58,070
+the array we Loop through each index in
+the array and call the classes update
+
+1004
+00:17:58,070 --> 00:17:58,080
+the array and call the classes update
+ 
+
+1005
+00:17:58,080 --> 00:18:00,110
+the array and call the classes update
+signal method to fill out our signal
+
+1006
+00:18:00,110 --> 00:18:00,120
+signal method to fill out our signal
+ 
+
+1007
+00:18:00,120 --> 00:18:02,029
+signal method to fill out our signal
+list this function Returns the current
+
+1008
+00:18:02,029 --> 00:18:02,039
+list this function Returns the current
+ 
+
+1009
+00:18:02,039 --> 00:18:04,610
+list this function Returns the current
+signal for that index in the array after
+
+1010
+00:18:04,610 --> 00:18:04,620
+signal for that index in the array after
+ 
+
+1011
+00:18:04,620 --> 00:18:06,409
+signal for that index in the array after
+the loop we add the signal to the data
+
+1012
+00:18:06,409 --> 00:18:06,419
+the loop we add the signal to the data
+ 
+
+1013
+00:18:06,419 --> 00:18:08,210
+the loop we add the signal to the data
+frame compute the next turns and
+
+1014
+00:18:08,210 --> 00:18:08,220
+frame compute the next turns and
+ 
+
+1015
+00:18:08,220 --> 00:18:10,070
+frame compute the next turns and
+multiply the signal by the returns to
+
+1016
+00:18:10,070 --> 00:18:10,080
+multiply the signal by the returns to
+ 
+
+1017
+00:18:10,080 --> 00:18:12,289
+multiply the signal by the returns to
+get the out of sample returns let's look
+
+1018
+00:18:12,289 --> 00:18:12,299
+get the out of sample returns let's look
+ 
+
+1019
+00:18:12,299 --> 00:18:14,270
+get the out of sample returns let's look
+at the class and the initialize function
+
+1020
+00:18:14,270 --> 00:18:14,280
+at the class and the initialize function
+ 
+
+1021
+00:18:14,280 --> 00:18:16,010
+at the class and the initialize function
+we save our inputs and do class
+
+1022
+00:18:16,010 --> 00:18:16,020
+we save our inputs and do class
+ 
+
+1023
+00:18:16,020 --> 00:18:18,890
+we save our inputs and do class
+variables next train is the index of the
+
+1024
+00:18:18,890 --> 00:18:18,900
+variables next train is the index of the
+ 
+
+1025
+00:18:18,900 --> 00:18:20,510
+variables next train is the index of the
+closing price array when we will find
+
+1026
+00:18:20,510 --> 00:18:20,520
+closing price array when we will find
+ 
+
+1027
+00:18:20,520 --> 00:18:22,850
+closing price array when we will find
+the patterns these variables hold the
+
+1028
+00:18:22,850 --> 00:18:22,860
+the patterns these variables hold the
+ 
+
+1029
+00:18:22,860 --> 00:18:24,710
+the patterns these variables hold the
+current signal and hold period of the
+
+1030
+00:18:24,710 --> 00:18:24,720
+current signal and hold period of the
+ 
+
+1031
+00:18:24,720 --> 00:18:27,169
+current signal and hold period of the
+system we create an instance of the pit
+
+1032
+00:18:27,169 --> 00:18:27,179
+system we create an instance of the pit
+ 
+
+1033
+00:18:27,179 --> 00:18:28,730
+system we create an instance of the pit
+pattern minor class which we already
+
+1034
+00:18:28,730 --> 00:18:28,740
+pattern minor class which we already
+ 
+
+1035
+00:18:28,740 --> 00:18:31,370
+pattern minor class which we already
+went over with the inputs specified the
+
+1036
+00:18:31,370 --> 00:18:31,380
+went over with the inputs specified the
+ 
+
+1037
+00:18:31,380 --> 00:18:33,350
+went over with the inputs specified the
+class has only one function update
+
+1038
+00:18:33,350 --> 00:18:33,360
+class has only one function update
+ 
+
+1039
+00:18:33,360 --> 00:18:35,630
+class has only one function update
+signal we already saw the loop that uses
+
+1040
+00:18:35,630 --> 00:18:35,640
+signal we already saw the loop that uses
+ 
+
+1041
+00:18:35,640 --> 00:18:37,610
+signal we already saw the loop that uses
+it we check if the current index is
+
+1042
+00:18:37,610 --> 00:18:37,620
+it we check if the current index is
+ 
+
+1043
+00:18:37,620 --> 00:18:40,010
+it we check if the current index is
+equal to the next train variable if it
+
+1044
+00:18:40,010 --> 00:18:40,020
+equal to the next train variable if it
+ 
+
+1045
+00:18:40,020 --> 00:18:41,750
+equal to the next train variable if it
+is we call the train function of the
+
+1046
+00:18:41,750 --> 00:18:41,760
+is we call the train function of the
+ 
+
+1047
+00:18:41,760 --> 00:18:44,029
+is we call the train function of the
+pattern mining class we update the next
+
+1048
+00:18:44,029 --> 00:18:44,039
+pattern mining class we update the next
+ 
+
+1049
+00:18:44,039 --> 00:18:46,370
+pattern mining class we update the next
+train variable by adding the step size
+
+1050
+00:18:46,370 --> 00:18:46,380
+train variable by adding the step size
+ 
+
+1051
+00:18:46,380 --> 00:18:48,650
+train variable by adding the step size
+we keep track of the hold period and
+
+1052
+00:18:48,650 --> 00:18:48,660
+we keep track of the hold period and
+ 
+
+1053
+00:18:48,660 --> 00:18:50,990
+we keep track of the hold period and
+signal with these two if statements if
+
+1054
+00:18:50,990 --> 00:18:51,000
+signal with these two if statements if
+ 
+
+1055
+00:18:51,000 --> 00:18:52,669
+signal with these two if statements if
+the current hold period is above one we
+
+1056
+00:18:52,669 --> 00:18:52,679
+the current hold period is above one we
+ 
+
+1057
+00:18:52,679 --> 00:18:54,770
+the current hold period is above one we
+decrement if the whole period is zero we
+
+1058
+00:18:54,770 --> 00:18:54,780
+decrement if the whole period is zero we
+ 
+
+1059
+00:18:54,780 --> 00:18:56,930
+decrement if the whole period is zero we
+set the current signal to zero at each
+
+1060
+00:18:56,930 --> 00:18:56,940
+set the current signal to zero at each
+ 
+
+1061
+00:18:56,940 --> 00:18:58,610
+set the current signal to zero at each
+index we find the current perceptually
+
+1062
+00:18:58,610 --> 00:18:58,620
+index we find the current perceptually
+ 
+
+1063
+00:18:58,620 --> 00:19:01,130
+index we find the current perceptually
+important points we pass the Y values of
+
+1064
+00:19:01,130 --> 00:19:01,140
+important points we pass the Y values of
+ 
+
+1065
+00:19:01,140 --> 00:19:03,350
+important points we pass the Y values of
+the points into the predict function the
+
+1066
+00:19:03,350 --> 00:19:03,360
+the points into the predict function the
+ 
+
+1067
+00:19:03,360 --> 00:19:05,930
+the points into the predict function the
+predict function returns 0 1 or negative
+
+1068
+00:19:05,930 --> 00:19:05,940
+predict function returns 0 1 or negative
+ 
+
+1069
+00:19:05,940 --> 00:19:08,450
+predict function returns 0 1 or negative
+one if the return value is not 0 we set
+
+1070
+00:19:08,450 --> 00:19:08,460
+one if the return value is not 0 we set
+ 
+
+1071
+00:19:08,460 --> 00:19:10,010
+one if the return value is not 0 we set
+the current signal and set the hold
+
+1072
+00:19:10,010 --> 00:19:10,020
+the current signal and set the hold
+ 
+
+1073
+00:19:10,020 --> 00:19:11,930
+the current signal and set the hold
+period to the value specified then
+
+1074
+00:19:11,930 --> 00:19:11,940
+period to the value specified then
+ 
+
+1075
+00:19:11,940 --> 00:19:14,510
+period to the value specified then
+return the current signal here are the
+
+1076
+00:19:14,510 --> 00:19:14,520
+return the current signal here are the
+ 
+
+1077
+00:19:14,520 --> 00:19:16,789
+return the current signal here are the
+out of sample results this is the
+
+1078
+00:19:16,789 --> 00:19:16,799
+out of sample results this is the
+ 
+
+1079
+00:19:16,799 --> 00:19:18,830
+out of sample results this is the
+cumulative log returns from the walk
+
+1080
+00:19:18,830 --> 00:19:18,840
+cumulative log returns from the walk
+ 
+
+1081
+00:19:18,840 --> 00:19:21,350
+cumulative log returns from the walk
+forward code we just saw it is the
+
+1082
+00:19:21,350 --> 00:19:21,360
+forward code we just saw it is the
+ 
+
+1083
+00:19:21,360 --> 00:19:23,210
+forward code we just saw it is the
+combined performance of both long and
+
+1084
+00:19:23,210 --> 00:19:23,220
+combined performance of both long and
+ 
+
+1085
+00:19:23,220 --> 00:19:25,669
+combined performance of both long and
+short patterns found we can see that the
+
+1086
+00:19:25,669 --> 00:19:25,679
+short patterns found we can see that the
+ 
+
+1087
+00:19:25,679 --> 00:19:28,490
+short patterns found we can see that the
+patterns found on 2018 and 2019 did very
+
+1088
+00:19:28,490 --> 00:19:28,500
+patterns found on 2018 and 2019 did very
+ 
+
+1089
+00:19:28,500 --> 00:19:30,890
+patterns found on 2018 and 2019 did very
+well throughout 2020 but the performance
+
+1090
+00:19:30,890 --> 00:19:30,900
+well throughout 2020 but the performance
+ 
+
+1091
+00:19:30,900 --> 00:19:33,169
+well throughout 2020 but the performance
+decayed afterward essentially flat
+
+1092
+00:19:33,169 --> 00:19:33,179
+decayed afterward essentially flat
+ 
+
+1093
+00:19:33,179 --> 00:19:35,630
+decayed afterward essentially flat
+assumes the patterns found in Prior data
+
+1094
+00:19:35,630 --> 00:19:35,640
+assumes the patterns found in Prior data
+ 
+
+1095
+00:19:35,640 --> 00:19:38,150
+assumes the patterns found in Prior data
+did not continue to work into 2021 and
+
+1096
+00:19:38,150 --> 00:19:38,160
+did not continue to work into 2021 and
+ 
+
+1097
+00:19:38,160 --> 00:19:41,330
+did not continue to work into 2021 and
+2022 but the performance of 2020 shows
+
+1098
+00:19:41,330 --> 00:19:41,340
+2022 but the performance of 2020 shows
+ 
+
+1099
+00:19:41,340 --> 00:19:43,549
+2022 but the performance of 2020 shows
+this type of strategy has some potential
+
+1100
+00:19:43,549 --> 00:19:43,559
+this type of strategy has some potential
+ 
+
+1101
+00:19:43,559 --> 00:19:45,289
+this type of strategy has some potential
+what we did in this video is find
+
+1102
+00:19:45,289 --> 00:19:45,299
+what we did in this video is find
+ 
+
+1103
+00:19:45,299 --> 00:19:47,270
+what we did in this video is find
+similar structures in price and attempt
+
+1104
+00:19:47,270 --> 00:19:47,280
+similar structures in price and attempt
+ 
+
+1105
+00:19:47,280 --> 00:19:49,310
+similar structures in price and attempt
+to build trading patterns from them what
+
+1106
+00:19:49,310 --> 00:19:49,320
+to build trading patterns from them what
+ 
+
+1107
+00:19:49,320 --> 00:19:51,230
+to build trading patterns from them what
+I showed only scratches the surface of
+
+1108
+00:19:51,230 --> 00:19:51,240
+I showed only scratches the surface of
+ 
+
+1109
+00:19:51,240 --> 00:19:53,270
+I showed only scratches the surface of
+what is possible the code shown should
+
+1110
+00:19:53,270 --> 00:19:53,280
+what is possible the code shown should
+ 
+
+1111
+00:19:53,280 --> 00:19:55,549
+what is possible the code shown should
+be viewed more as a toy than a fully
+
+1112
+00:19:55,549 --> 00:19:55,559
+be viewed more as a toy than a fully
+ 
+
+1113
+00:19:55,559 --> 00:19:58,010
+be viewed more as a toy than a fully
+fledged trading system it has a long way
+
+1114
+00:19:58,010 --> 00:19:58,020
+fledged trading system it has a long way
+ 
+
+1115
+00:19:58,020 --> 00:20:00,470
+fledged trading system it has a long way
+to go the results are not Stellar but I
+
+1116
+00:20:00,470 --> 00:20:00,480
+to go the results are not Stellar but I
+ 
+
+1117
+00:20:00,480 --> 00:20:02,390
+to go the results are not Stellar but I
+wanted to show a complete example of
+
+1118
+00:20:02,390 --> 00:20:02,400
+wanted to show a complete example of
+ 
+
+1119
+00:20:02,400 --> 00:20:04,430
+wanted to show a complete example of
+pattern mining a major issue with this
+
+1120
+00:20:04,430 --> 00:20:04,440
+pattern mining a major issue with this
+ 
+
+1121
+00:20:04,440 --> 00:20:06,470
+pattern mining a major issue with this
+implementation is the clustering is
+
+1122
+00:20:06,470 --> 00:20:06,480
+implementation is the clustering is
+ 
+
+1123
+00:20:06,480 --> 00:20:08,450
+implementation is the clustering is
+highly dependent on the the random seed
+
+1124
+00:20:08,450 --> 00:20:08,460
+highly dependent on the the random seed
+ 
+
+1125
+00:20:08,460 --> 00:20:10,610
+highly dependent on the the random seed
+it will return different clusters each
+
+1126
+00:20:10,610 --> 00:20:10,620
+it will return different clusters each
+ 
+
+1127
+00:20:10,620 --> 00:20:12,529
+it will return different clusters each
+run this Randomness is from the
+
+1128
+00:20:12,529 --> 00:20:12,539
+run this Randomness is from the
+ 
+
+1129
+00:20:12,539 --> 00:20:14,930
+run this Randomness is from the
+initialization of the Clusters solving
+
+1130
+00:20:14,930 --> 00:20:14,940
+initialization of the Clusters solving
+ 
+
+1131
+00:20:14,940 --> 00:20:17,210
+initialization of the Clusters solving
+for the optimal K means is an MP hard
+
+1132
+00:20:17,210 --> 00:20:17,220
+for the optimal K means is an MP hard
+ 
+
+1133
+00:20:17,220 --> 00:20:19,190
+for the optimal K means is an MP hard
+problem and what we actually get is only
+
+1134
+00:20:19,190 --> 00:20:19,200
+problem and what we actually get is only
+ 
+
+1135
+00:20:19,200 --> 00:20:21,710
+problem and what we actually get is only
+a local Optimum also each portion of the
+
+1136
+00:20:21,710 --> 00:20:21,720
+a local Optimum also each portion of the
+ 
+
+1137
+00:20:21,720 --> 00:20:23,270
+a local Optimum also each portion of the
+algorithm has plenty of room for
+
+1138
+00:20:23,270 --> 00:20:23,280
+algorithm has plenty of room for
+ 
+
+1139
+00:20:23,280 --> 00:20:24,950
+algorithm has plenty of room for
+improvement we could better represent
+
+1140
+00:20:24,950 --> 00:20:24,960
+improvement we could better represent
+ 
+
+1141
+00:20:24,960 --> 00:20:26,630
+improvement we could better represent
+the patterns we could find a better way
+
+1142
+00:20:26,630 --> 00:20:26,640
+the patterns we could find a better way
+ 
+
+1143
+00:20:26,640 --> 00:20:29,270
+the patterns we could find a better way
+to Cluster or even skip the Clusters and
+
+1144
+00:20:29,270 --> 00:20:29,280
+to Cluster or even skip the Clusters and
+ 
+
+1145
+00:20:29,280 --> 00:20:31,310
+to Cluster or even skip the Clusters and
+do a nearest neighbor approach we could
+
+1146
+00:20:31,310 --> 00:20:31,320
+do a nearest neighbor approach we could
+ 
+
+1147
+00:20:31,320 --> 00:20:32,990
+do a nearest neighbor approach we could
+also evaluate the patterns differently
+
+1148
+00:20:32,990 --> 00:20:33,000
+also evaluate the patterns differently
+ 
+
+1149
+00:20:33,000 --> 00:20:35,090
+also evaluate the patterns differently
+Beyond a simple hold period but
+
+1150
+00:20:35,090 --> 00:20:35,100
+Beyond a simple hold period but
+ 
+
+1151
+00:20:35,100 --> 00:20:36,590
+Beyond a simple hold period but
+hopefully this video gives you some
+
+1152
+00:20:36,590 --> 00:20:36,600
+hopefully this video gives you some
+ 
+
+1153
+00:20:36,600 --> 00:20:38,510
+hopefully this video gives you some
+ideas for your own trading and research
+
+1154
+00:20:38,510 --> 00:20:38,520
+ideas for your own trading and research
+ 
+
+1155
+00:20:38,520 --> 00:20:40,250
+ideas for your own trading and research
+I would like to make more videos on this
+
+1156
+00:20:40,250 --> 00:20:40,260
+I would like to make more videos on this
+ 
+
+1157
+00:20:40,260 --> 00:20:42,049
+I would like to make more videos on this
+topic in the future there is quite a bit
+
+1158
+00:20:42,049 --> 00:20:42,059
+topic in the future there is quite a bit
+ 
+
+1159
+00:20:42,059 --> 00:20:44,450
+topic in the future there is quite a bit
+to be done that's it for this one thank
+
+1160
+00:20:44,450 --> 00:20:44,460
+to be done that's it for this one thank
+ 
+
+1161
+00:20:44,460 --> 00:20:47,360
+to be done that's it for this one thank
+you for watching
+
