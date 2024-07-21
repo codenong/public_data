@@ -1,0 +1,1162 @@
+in this video we are going to data my
+in this video we are going to data my
+novel chart patterns with python I'll
+novel chart patterns with python I'll
+outline an approach to find High
+outline an approach to find High
+performing patterns in the price
+performing patterns in the price
+structure on any Market the
+structure on any Market the
+visualization you are seeing now is the
+visualization you are seeing now is the
+current price structure pattern drawn in
+current price structure pattern drawn in
+white we will save and normalize each of
+white we will save and normalize each of
+these shapes then group them into
+these shapes then group them into
+clusters to find recurring patterns in
+clusters to find recurring patterns in
+price structure we will assess the
+price structure we will assess the
+future behavior of the market after
+future behavior of the market after
+these price structure patterns manifest
+these price structure patterns manifest
+to find profitable patterns if you like
+to find profitable patterns if you like
+more advanced algorithmic trading
+more advanced algorithmic trading
+content like this consider subscribing
+content like this consider subscribing
+there are three main steps in this
+there are three main steps in this
+approach first we build a data set of
+approach first we build a data set of
+price shapes then we cluster the data
+price shapes then we cluster the data
+set into groups of similar patterns then
+set into groups of similar patterns then
+we assess and select the best patterns
+we assess and select the best patterns
+that tend to proceed a move in the price
+that tend to proceed a move in the price
+first we need to build our data set in
+first we need to build our data set in
+this example we are finding five
+this example we are finding five
+perceptually important points on the
+perceptually important points on the
+recent 24 candles of data if you are
+recent 24 candles of data if you are
+unfamiliar with the perceptually
+unfamiliar with the perceptually
+important Point algorithm I covered in
+important Point algorithm I covered in
+detail in my chart pattern algorithms
+detail in my chart pattern algorithms
+video linked in the corner but quickly
+video linked in the corner but quickly
+the perceptually import important Point
+the perceptually import important Point
+algorithm always selects the first and
+algorithm always selects the first and
+last points on a section of data then
+last points on a section of data then
+selects additional internal points by
+selects additional internal points by
+finding the points with the maximum
+finding the points with the maximum
+distance from two adjacent selected
+distance from two adjacent selected
+points I drew lines between the Five
+points I drew lines between the Five
+Points to make it a little easier to see
+Points to make it a little easier to see
+but these Five Points serve as a summary
+but these Five Points serve as a summary
+of The Price action over the last 24
+of The Price action over the last 24
+candles of data this reduces
+candles of data this reduces
+dimensionality which makes it much
+dimensionality which makes it much
+easier and faster for clustering
+easier and faster for clustering
+algorithms or other algorithms to
+algorithms or other algorithms to
+process we compute the perceptually
+process we compute the perceptually
+important points for each subsequence of
+important points for each subsequence of
+24 candles across the entire data set
+24 candles across the entire data set
+and record them we will cluster these
+and record them we will cluster these
+subsequences to find similar groups this
+subsequences to find similar groups this
+idea originated in 2001 with the
+idea originated in 2001 with the
+publication of this paper you may have
+publication of this paper you may have
+noticed earlier but as this
+noticed earlier but as this
+visualization runs the pattern shape
+visualization runs the pattern shape
+does not update with each new candle
+does not update with each new candle
+there's an important reason for this in
+there's an important reason for this in
+2003 this paper was published that
+2003 this paper was published that
+critiqued the 2001 paper it claimed
+critiqued the 2001 paper it claimed
+subsequence clusters are meaningless
+subsequence clusters are meaningless
+this paper goes into great detail and it
+this paper goes into great detail and it
+is worth reading if you're interested in
+is worth reading if you're interested in
+pattern Discovery for trading but in
+pattern Discovery for trading but in
+short adjacent subsequences are not
+short adjacent subsequences are not
+unique they have considerable overlap
+unique they have considerable overlap
+this overlap causes trivial matches and
+this overlap causes trivial matches and
+causes the patterns found to be
+causes the patterns found to be
+essentially random the authors of the
+essentially random the authors of the
+2001 paper made an update to their
+2001 paper made an update to their
+method to prevent meaningless pattern
+method to prevent meaningless pattern
+Discovery in this 2005 paper this
+Discovery in this 2005 paper this
+updated method is the one we will use we
+updated method is the one we will use we
+compute the perceptually important
+compute the perceptually important
+points with a sliding window on the
+points with a sliding window on the
+recent 24 candles but only included in
+recent 24 candles but only included in
+the data set at the internal
+the data set at the internal
+perceptually important points are
+perceptually important points are
+different from the last subsequence this
+different from the last subsequence this
+change causes each subsequence to be
+change causes each subsequence to be
+more unique and avoid trivial
+more unique and avoid trivial
+meaningless clusterings it also reduces
+meaningless clusterings it also reduces
+the total amount of subsequences to
+the total amount of subsequences to
+Cluster which reduces the processing
+Cluster which reduces the processing
+time an added bonus let's look at the
+time an added bonus let's look at the
+code for this
+code for this
+the code for the entire data mining
+the code for the entire data mining
+process is managed by a class pip
+process is managed by a class pip
+pattern Miner we first load in some data
+pattern Miner we first load in some data
+from a CSV we convert the prices to
+from a CSV we convert the prices to
+logarithmic prices the class assumes
+logarithmic prices the class assumes
+that the prices are logarithmic so this
+that the prices are logarithmic so this
+must be done we get the closing price as
+must be done we get the closing price as
+an array then we create an instance of
+an array then we create an instance of
+the class it has three parameters the
+the class it has three parameters the
+number of perceptually important points
+number of perceptually important points
+the look back which is the number of
+the look back which is the number of
+candles the Pips will be found on and
+candles the Pips will be found on and
+the hold period the hold period will be
+the hold period the hold period will be
+discussed more later but it is how many
+discussed more later but it is how many
+candles a position will be held after a
+candles a position will be held after a
+selected pattern is found we pass our
+selected pattern is found we pass our
+closing price array to the classes train
+closing price array to the classes train
+function the n-wraps parameter will be
+function the n-wraps parameter will be
+discussed later here is the init
+discussed later here is the init
+function of the class it doesn't do
+function of the class it doesn't do
+anything but declare variables the main
+anything but declare variables the main
+thing of note for now is the input
+thing of note for now is the input
+parameters are saved in these values
+parameters are saved in these values
+here is the train function we save the
+here is the train function we save the
+closing price array as data in the class
+closing price array as data in the class
+then we call this function find unique
+then we call this function find unique
+patterns this function handles the
+patterns this function handles the
+creation of the unique pit patterns
+creation of the unique pit patterns
+which we will cluster later we will keep
+which we will cluster later we will keep
+track of the coordinates of the last
+track of the coordinates of the last
+subsequence in this list we Loop through
+subsequence in this list we Loop through
+each candle in the data set we find the
+each candle in the data set we find the
+most recent section of the data and
+most recent section of the data and
+store it in this variable window when we
+store it in this variable window when we
+initiated the class we set look back to
+initiated the class we set look back to
+24 so window contains the 24 most recent
+24 so window contains the 24 most recent
+closing prices we find the perceptually
+closing prices we find the perceptually
+important points on the recent data we
+important points on the recent data we
+update the x coordinates of the
+update the x coordinates of the
+perceptually important points to match
+perceptually important points to match
+the indices of the entire array we Loop
+the indices of the entire array we Loop
+through the internal perceptually
+through the internal perceptually
+important points ignoring the first and
+important points ignoring the first and
+last and compare them to the last set
+last and compare them to the last set
+found if there is a difference found we
+found if there is a difference found we
+set the Boolean same to false and break
+set the Boolean same to false and break
+if the internal points are not the same
+if the internal points are not the same
+we record the perceptually important
+we record the perceptually important
+points as a unique pattern we Z score
+points as a unique pattern we Z score
+normalize the price values by
+normalize the price values by
+subtracting their mean and dividing by
+subtracting their mean and dividing by
+the standard deviation this will cause
+the standard deviation this will cause
+each pattern to have a similar price
+each pattern to have a similar price
+scale which allows us to Cluster price
+scale which allows us to Cluster price
+patterns at different times throughout
+patterns at different times throughout
+the data we record our normalized
+the data we record our normalized
+pattern and the current index finally we
+pattern and the current index finally we
+update the indices of the last bound
+update the indices of the last bound
+perceptually important points then
+perceptually important points then
+continue looping through the rest of the
+continue looping through the rest of the
+data set after we have done this we have
+data set after we have done this we have
+a collection of unique patterns the
+a collection of unique patterns the
+prices made throughout the data given I
+prices made throughout the data given I
+should note that we do not pay attention
+should note that we do not pay attention
+to the time between the points making up
+to the time between the points making up
+the pattern just the levels of price
+the pattern just the levels of price
+throughout the pattern now with our
+throughout the pattern now with our
+collection of normalized price patterns
+collection of normalized price patterns
+we will cluster them into similar groups
+we will cluster them into similar groups
+there is a large variety of clustering
+there is a large variety of clustering
+algorithms each with its own merits and
+algorithms each with its own merits and
+weaknesses but one important feature we
+weaknesses but one important feature we
+need is the ability to classify new
+need is the ability to classify new
+observations into a cluster this way we
+observations into a cluster this way we
+can use the found patterns on out of
+can use the found patterns on out of
+sample data I'm going to elect to use
+sample data I'm going to elect to use
+the simple well-known k-means clustering
+the simple well-known k-means clustering
+this algorithm clusters data into a set
+this algorithm clusters data into a set
+number of clusters the cluster centers
+number of clusters the cluster centers
+are the mean values of all the samples
+are the mean values of all the samples
+within a cluster new samples can be
+within a cluster new samples can be
+assigned to a cluster by finding the
+assigned to a cluster by finding the
+cluster sensor that is the closest to it
+cluster sensor that is the closest to it
+I won't cover the algorithm here but
+I won't cover the algorithm here but
+there are many resources available
+there are many resources available
+online explaining it if you are
+online explaining it if you are
+unfamiliar when clustering these pattern
+unfamiliar when clustering these pattern
+shapes with the K means algorithm we
+shapes with the K means algorithm we
+have an important decision to make how
+have an important decision to make how
+many clusters do we use if we use less
+many clusters do we use if we use less
+clusters then the amount of price shapes
+clusters then the amount of price shapes
+in each cluster will be higher which
+in each cluster will be higher which
+allows us to have a higher sample size
+allows us to have a higher sample size
+and thus higher confidence when we
+and thus higher confidence when we
+assess the performance of the cluster of
+assess the performance of the cluster of
+price shapes however using less clusters
+price shapes however using less clusters
+will group price shapes that are less
+will group price shapes that are less
+similar so we may miss out on a truly
+similar so we may miss out on a truly
+good pattern that exists but is lumped
+good pattern that exists but is lumped
+in with less Salient price shapes there
+in with less Salient price shapes there
+is no perfect solution to this problem
+is no perfect solution to this problem
+and it is certainly something requiring
+and it is certainly something requiring
+further research but a decent approach I
+further research but a decent approach I
+found is using the silhouette method the
+found is using the silhouette method the
+silhouette method scores each sample for
+silhouette method scores each sample for
+how well it fits into its cluster
+how well it fits into its cluster
+samples that fit nicely toward the
+samples that fit nicely toward the
+center of their cluster score high while
+center of their cluster score high while
+samples that are on the Outer Edge lying
+samples that are on the Outer Edge lying
+in between two clusters will get a lower
+in between two clusters will get a lower
+score the silhouette score can be
+score the silhouette score can be
+averaged across all samples and this
+averaged across all samples and this
+gives us an idea of how well the
+gives us an idea of how well the
+clustering performs by using this method
+clustering performs by using this method
+we can compare the silhouette score when
+we can compare the silhouette score when
+using k-means with 5 clusters versus 10
+using k-means with 5 clusters versus 10
+clusters and select the better forming
+clusters and select the better forming
+amount of clusters I'll leave the
+amount of clusters I'll leave the
+citation for the silhouette method in
+citation for the silhouette method in
+the description if you want more detail
+the description if you want more detail
+but thankfully there is a python library
+but thankfully there is a python library
+to do the work for us so let's look at
+to do the work for us so let's look at
+the code for clustering to do the
+the code for clustering to do the
+clustering we will use the pi clustering
+clustering we will use the pi clustering
+Library
+Library
+these are the Imports that we need
+these are the Imports that we need
+this is the same train function we saw
+this is the same train function we saw
+earlier after finding the unique
+earlier after finding the unique
+perceptually important Point patterns we
+perceptually important Point patterns we
+use the silhouette case search to try
+use the silhouette case search to try
+different amounts of clusters I have it
+different amounts of clusters I have it
+set to try five clusters up to 40
+set to try five clusters up to 40
+clusters we get the best amount of
+clusters we get the best amount of
+clusters from the silhouette search then
+clusters from the silhouette search then
+we call the function k-means cluster
+we call the function k-means cluster
+with the amount the silhouette method
+with the amount the silhouette method
+deemed best the K means clustering
+deemed best the K means clustering
+algorithm needs initial cluster centers
+algorithm needs initial cluster centers
+to start the optimization we get the
+to start the optimization we get the
+initial centers with the k-means plus
+initial centers with the k-means plus
+plus initializer then we pass the
+plus initializer then we pass the
+initial clusters and the unique pit
+initial clusters and the unique pit
+patterns to the k-means instance and
+patterns to the k-means instance and
+process we get the cluster centers and
+process we get the cluster centers and
+cluster membership of each sample and
+cluster membership of each sample and
+the data set at this point the price
+the data set at this point the price
+shapes are placed into clusters now we
+shapes are placed into clusters now we
+assess the Clusters and select the ones
+assess the Clusters and select the ones
+that precede movements in price to
+that precede movements in price to
+assess the performance of each cluster I
+assess the performance of each cluster I
+employ a simple holding period each time
+employ a simple holding period each time
+a pattern of a given cluster is found we
+a pattern of a given cluster is found we
+look at the Market's price change over
+look at the Market's price change over
+the next H candles in the example we've
+the next H candles in the example we've
+used so far we have found five
+used so far we have found five
+perceptually important points on 24
+perceptually important points on 24
+candles of data since we are looking at
+candles of data since we are looking at
+patterns that span 24 candles I think a
+patterns that span 24 candles I think a
+natural holding period would be less
+natural holding period would be less
+than 24. I chose 6 as 1 4 of the pattern
+than 24. I chose 6 as 1 4 of the pattern
+length seems like a reasonable
+length seems like a reasonable
+prediction Horizon this choice is fairly
+prediction Horizon this choice is fairly
+arbitrary but we have to pick something
+arbitrary but we have to pick something
+over the course of the training set we
+over the course of the training set we
+will find the Martin ratio for each
+will find the Martin ratio for each
+cluster the Martin ratio is calculated
+cluster the Martin ratio is calculated
+by dividing the total return by the
+by dividing the total return by the
+ulcer index the ulcer index is
+ulcer index the ulcer index is
+calculated by summing the squared
+calculated by summing the squared
+drawdown at each candle in the data set
+drawdown at each candle in the data set
+this causes the Martin ratio to be
+this causes the Martin ratio to be
+punished by both the length and depth of
+punished by both the length and depth of
+drawdowns if a cluster of patterns have
+drawdowns if a cluster of patterns have
+smaller drawdowns or recover quickly
+smaller drawdowns or recover quickly
+from drawdowns then they will have a
+from drawdowns then they will have a
+higher margin ratio the developer of the
+higher margin ratio the developer of the
+Martin ratio has an excellent article
+Martin ratio has an excellent article
+describing it in detail which I linked
+describing it in detail which I linked
+below after we find the Martin ratio for
+below after we find the Martin ratio for
+each cluster we will select the best
+each cluster we will select the best
+pattern for trading long and the best
+pattern for trading long and the best
+pattern for trading short we will
+pattern for trading short we will
+combine the signals of the best long and
+combine the signals of the best long and
+short patterns then compute the Martin
+short patterns then compute the Martin
+ratio on the combined version this will
+ratio on the combined version this will
+be our final performance figure let's
+be our final performance figure let's
+look at the code for this back looking
+look at the code for this back looking
+at the train function I didn't mention
+at the train function I didn't mention
+this earlier but at the start we compute
+this earlier but at the start we compute
+the logarithmic returns of the closing
+the logarithmic returns of the closing
+price and shift them forward by one
+price and shift them forward by one
+candle we will use these returns in a
+candle we will use these returns in a
+moment after clustering the patterns we
+moment after clustering the patterns we
+call the function git cluster signals
+call the function git cluster signals
+and here's the function we Loop through
+and here's the function we Loop through
+each cluster found for each cluster we
+each cluster found for each cluster we
+create a signal concurrent with the
+create a signal concurrent with the
+closing press array we passed in earlier
+closing press array we passed in earlier
+we initialize it as all zeros we Loop
+we initialize it as all zeros we Loop
+through each member of the cluster we
+through each member of the cluster we
+get the index in the closing price array
+get the index in the closing price array
+that this cluster member or pattern
+that this cluster member or pattern
+happens the index is the last candle in
+happens the index is the last candle in
+the pattern we set the signal array to 1
+the pattern we set the signal array to 1
+for the set hold period we used six so
+for the set hold period we used six so
+this will add six ones after this
+this will add six ones after this
+pattern occurred to the signal array
+pattern occurred to the signal array
+then we add our signals to the this list
+then we add our signals to the this list
+it is a class variable back to the train
+it is a class variable back to the train
+function after Computing our cluster
+function after Computing our cluster
+signals we call the assign clusters
+signals we call the assign clusters
+function we Loop through each cluster we
+function we Loop through each cluster we
+multiply the cluster signal by the
+multiply the cluster signal by the
+logarithmic Returns the cluster signal
+logarithmic Returns the cluster signal
+is composed of zeros and ones so this
+is composed of zeros and ones so this
+gives us all the returns that a cluster
+gives us all the returns that a cluster
+was exposed to the market we compute the
+was exposed to the market we compute the
+Martin ratio from these returns we'll
+Martin ratio from these returns we'll
+look at this function in a second but
+look at this function in a second but
+now it returns a number we record the
+now it returns a number we record the
+Martin ratio for each cluster after the
+Martin ratio for each cluster after the
+loop we find the cluster index of the
+loop we find the cluster index of the
+highest margin ratio this is the best
+highest margin ratio this is the best
+long pattern then we find the cluster
+long pattern then we find the cluster
+index of the lowest Martin ratio this
+index of the lowest Martin ratio this
+will be our short pattern we record the
+will be our short pattern we record the
+long and short pattern in these lists I
+long and short pattern in these lists I
+experimented with selecting multiple
+experimented with selecting multiple
+patterns and I used a list to record
+patterns and I used a list to record
+these selected patterns here is the mark
+these selected patterns here is the mark
+ratio function it is passed an array of
+ratio function it is passed an array of
+log returns we first sum the returns if
+log returns we first sum the returns if
+the sum is negative we set this Boolean
+the sum is negative we set this Boolean
+as true lagging for short trading and we
+as true lagging for short trading and we
+we also flip the signs we get the
+we also flip the signs we get the
+cumulative sum of returns we
+cumulative sum of returns we
+exponentiate them for computing
+exponentiate them for computing
+percentage drawdown we also convert it
+percentage drawdown we also convert it
+to a panda series to use the cumulative
+to a panda series to use the cumulative
+Max function in this line we are
+Max function in this line we are
+dividing the current sum of returns by
+dividing the current sum of returns by
+the max sum we've seen so far we
+the max sum we've seen so far we
+subtract one from this quotient this
+subtract one from this quotient this
+gives us the percentage drawdown at each
+gives us the percentage drawdown at each
+candle we Square this percentage and sum
+candle we Square this percentage and sum
+the squared percentage at each bar this
+the squared percentage at each bar this
+is the ulcer index we complete the ulcer
+is the ulcer index we complete the ulcer
+index by dividing by the size of the
+index by dividing by the size of the
+array and taking the square root the
+array and taking the square root the
+Martin ratio is the total return divided
+Martin ratio is the total return divided
+by the ulcer index if we flag these
+by the ulcer index if we flag these
+returns as a short pattern earlier we
+returns as a short pattern earlier we
+set the Martin ratio to negative this
+set the Martin ratio to negative this
+way the best long pattern will be the
+way the best long pattern will be the
+maximum value found and the best short
+maximum value found and the best short
+pattern will be the minimum value found
+pattern will be the minimum value found
+back to the train function once more we
+back to the train function once more we
+find our final margin ratio with this
+find our final margin ratio with this
+function get total performance this
+function get total performance this
+function is built to handle selecting
+function is built to handle selecting
+multiple long and short patterns if you
+multiple long and short patterns if you
+want to experiment but it works just
+want to experiment but it works just
+fine with just the one selected here we
+fine with just the one selected here we
+create a long and short signal of zeros
+create a long and short signal of zeros
+for the length of the data we Loop
+for the length of the data we Loop
+through each cluster if the cluster is a
+through each cluster if the cluster is a
+member of the selected long patterns we
+member of the selected long patterns we
+add the cluster signal to the long
+add the cluster signal to the long
+signal if the cluster is a member of the
+signal if the cluster is a member of the
+selected short patterns we add the
+selected short patterns we add the
+cluster signal to the short signal we
+cluster signal to the short signal we
+divide the signals by the number of
+divide the signals by the number of
+selected patterns in this case it's just
+selected patterns in this case it's just
+one so no effect we multiply the short
+one so no effect we multiply the short
+signal by negative one to flip the signs
+signal by negative one to flip the signs
+we combine the signals by adding them we
+we combine the signals by adding them we
+multiply the combined signal by the
+multiply the combined signal by the
+returns then we pass these combined
+returns then we pass these combined
+returns to the get Martin function we
+returns to the get Martin function we
+covered earlier at this point we found a
+covered earlier at this point we found a
+pattern for trading long and a pattern
+pattern for trading long and a pattern
+for trading short from the data let's
+for trading short from the data let's
+run this program on two years of hourly
+run this program on two years of hourly
+Bitcoin data from the beginning of 2018
+Bitcoin data from the beginning of 2018
+to the end of 2019 the silhouette method
+to the end of 2019 the silhouette method
+decided that 16 clusters was the best
+decided that 16 clusters was the best
+amount here are the cluster centers of
+amount here are the cluster centers of
+the long and short patterns discovered
+the long and short patterns discovered
+the long pattern is shown in green
+the long pattern is shown in green
+screen while the short pattern is shown
+screen while the short pattern is shown
+in red here is every member of the
+in red here is every member of the
+Clusters found in the test period the
+Clusters found in the test period the
+patterns are fairly loose there is quite
+patterns are fairly loose there is quite
+a bit of variation around the cluster
+a bit of variation around the cluster
+centers here are the cumulative log
+centers here are the cumulative log
+returns of the long short and combined
+returns of the long short and combined
+patterns on the in-sample data they look
+patterns on the in-sample data they look
+pretty good but these are in Sample
+pretty good but these are in Sample
+results we selected these patterns
+results we selected these patterns
+because they were the best so there is a
+because they were the best so there is a
+strong selection bias in these results
+strong selection bias in these results
+to compare the strength of the selection
+to compare the strength of the selection
+bias versus the strength of the actual
+bias versus the strength of the actual
+patterns in the data we will perform a
+patterns in the data we will perform a
+Monte Carlo permutation test to do this
+Monte Carlo permutation test to do this
+we will permute the price returns to
+we will permute the price returns to
+create a new permuted price path this
+create a new permuted price path this
+permeated price path has an identical
+permeated price path has an identical
+return distribution but all the
+return distribution but all the
+legitimate patterns that may or may not
+legitimate patterns that may or may not
+be present on the actual path are
+be present on the actual path are
+destroyed all that remains in the
+destroyed all that remains in the
+permitted price path isn't always we
+permitted price path isn't always we
+will run our entire procedure again on
+will run our entire procedure again on
+this primitive price path build our
+this primitive price path build our
+unique perceptually important Point
+unique perceptually important Point
+patterns cluster them and select the
+patterns cluster them and select the
+best performing clusters we will compare
+best performing clusters we will compare
+the Martin ratio we find on the permuted
+the Martin ratio we find on the permuted
+path to the one we found on the actual
+path to the one we found on the actual
+price path if the result we find on the
+price path if the result we find on the
+permitted price path is weaker than what
+permitted price path is weaker than what
+we find on the actual price path then
+we find on the actual price path then
+that serves as evidence that there are
+that serves as evidence that there are
+legitimate patterns in the actual data
+legitimate patterns in the actual data
+the more times we permeate the price and
+the more times we permeate the price and
+do this test the more evidence we gain I
+do this test the more evidence we gain I
+generated 100 permutations of the price
+generated 100 permutations of the price
+from the start of 2018 to the end of
+from the start of 2018 to the end of
+2019 and found the Martin ratio for each
+2019 and found the Martin ratio for each
+of them here are the Monte Carlo test
+of them here are the Monte Carlo test
+results the Martin ratio is found on
+results the Martin ratio is found on
+each of the permutations is displayed as
+each of the permutations is displayed as
+a histogram while the Martin ratio on
+a histogram while the Martin ratio on
+the actual price is displayed as a red
+the actual price is displayed as a red
+line the actual data is ahead of all the
+line the actual data is ahead of all the
+permutations this is good evidence that
+permutations this is good evidence that
+there is something present in the actual
+there is something present in the actual
+data that is not present in the price
+data that is not present in the price
+permutations let's look at the code for
+permutations let's look at the code for
+the Monte Carlo test the Monte Carlo
+the Monte Carlo test the Monte Carlo
+permutation function is controlled by
+permutation function is controlled by
+this parameter and Reps the number of
+this parameter and Reps the number of
+Monte Carlo repetitions we will use it
+Monte Carlo repetitions we will use it
+defaults to negative 1 which means we
+defaults to negative 1 which means we
+don't do the amount Monte Carlo test
+don't do the amount Monte Carlo test
+after we have finished the entire
+after we have finished the entire
+procedure on real data we are left with
+procedure on real data we are left with
+the final Martin ratio of the combined
+the final Martin ratio of the combined
+best long and short pattern we save this
+best long and short pattern we save this
+in the variable fit Martin we return
+in the variable fit Martin we return
+here if the Monte Carlo test is disabled
+here if the Monte Carlo test is disabled
+we Loop for each of the repetitions
+we Loop for each of the repetitions
+requested these two lines Shuffle the
+requested these two lines Shuffle the
+log returns of the original data we
+log returns of the original data we
+concatenate the first value of the
+concatenate the first value of the
+original array and the shuffled returns
+original array and the shuffled returns
+we set the class variable data as the
+we set the class variable data as the
+cumulative sum of the shuffled returns
+cumulative sum of the shuffled returns
+now we do everything exactly the same as
+now we do everything exactly the same as
+we did before but this time we are using
+we did before but this time we are using
+permuted data we find the unique pit
+permuted data we find the unique pit
+patterns cluster them find the cluster
+patterns cluster them find the cluster
+signals select the best then we get our
+signals select the best then we get our
+final performance figure on the
+final performance figure on the
+permeated data this is what we compare
+permeated data this is what we compare
+to the performance figure found on real
+to the performance figure found on real
+data we save this performance figure
+data we save this performance figure
+from the permuted data into this list
+from the permuted data into this list
+we've seen that our data mining process
+we've seen that our data mining process
+is finding something stronger on real
+is finding something stronger on real
+data than it finds on noise or muted
+data than it finds on noise or muted
+data so at this point we'll try using
+data so at this point we'll try using
+our found patterns on out of sample data
+our found patterns on out of sample data
+we will use a walk forward test to see
+we will use a walk forward test to see
+if our patterns work on out of sample
+if our patterns work on out of sample
+data I'll again use hourly Bitcoin data
+data I'll again use hourly Bitcoin data
+but from the beginning of 2018 to the
+but from the beginning of 2018 to the
+end of 2022 we will train on two years
+end of 2022 we will train on two years
+of data and test on one year of data so
+of data and test on one year of data so
+in this case finding patterns with 2018
+in this case finding patterns with 2018
+and 2019 data then testing them on 2020
+and 2019 data then testing them on 2020
+then training on 2019 and 2020 and
+then training on 2019 and 2020 and
+testing on 2021 and so on let's look at
+testing on 2021 and so on let's look at
+the code for this and then I'll show the
+the code for this and then I'll show the
+results before we go over the walk
+results before we go over the walk
+forward code there is one more function
+forward code there is one more function
+we need to go over in the pit pattern
+we need to go over in the pit pattern
+minor class the class we've been looking
+minor class the class we've been looking
+at so far this function predict is for
+at so far this function predict is for
+out of sample use it takes a list of
+out of sample use it takes a list of
+perceptually important points as input
+perceptually important points as input
+we z-score normalize the input then we
+we z-score normalize the input then we
+Loop through all the cluster centers and
+Loop through all the cluster centers and
+find the cluster center that is the
+find the cluster center that is the
+closest to the input this line here
+closest to the input this line here
+finds the euclidean distance between the
+finds the euclidean distance between the
+in input and the center if the closest
+in input and the center if the closest
+Center is one of the selected long
+Center is one of the selected long
+patterns we return one at the closest
+patterns we return one at the closest
+Center is one of the short patterns we
+Center is one of the short patterns we
+return negative one otherwise we return
+return negative one otherwise we return
+zero here is the script for the walk
+zero here is the script for the walk
+forward test we load data in from a CSV
+forward test we load data in from a CSV
+then convert the data into logarithmic
+then convert the data into logarithmic
+prices we get the closing price array we
+prices we get the closing price array we
+create an instance of this class WF pip
+create an instance of this class WF pip
+minor which is short for walk forward
+minor which is short for walk forward
+perceptually important Point minor we
+perceptually important Point minor we
+will look at this class in a second but
+will look at this class in a second but
+we pass in the parameters for the
+we pass in the parameters for the
+pattern mining npips look back and hold
+pattern mining npips look back and hold
+period we have already discussed the
+period we have already discussed the
+train size is set to two years and
+train size is set to two years and
+hourly data and the step size is set to
+hourly data and the step size is set to
+one year in hourly data we create a
+one year in hourly data we create a
+signal list of zeros the same size as
+signal list of zeros the same size as
+the array we Loop through each index in
+the array we Loop through each index in
+the array and call the classes update
+the array and call the classes update
+signal method to fill out our signal
+signal method to fill out our signal
+list this function Returns the current
+list this function Returns the current
+signal for that index in the array after
+signal for that index in the array after
+the loop we add the signal to the data
+the loop we add the signal to the data
+frame compute the next turns and
+frame compute the next turns and
+multiply the signal by the returns to
+multiply the signal by the returns to
+get the out of sample returns let's look
+get the out of sample returns let's look
+at the class and the initialize function
+at the class and the initialize function
+we save our inputs and do class
+we save our inputs and do class
+variables next train is the index of the
+variables next train is the index of the
+closing price array when we will find
+closing price array when we will find
+the patterns these variables hold the
+the patterns these variables hold the
+current signal and hold period of the
+current signal and hold period of the
+system we create an instance of the pit
+system we create an instance of the pit
+pattern minor class which we already
+pattern minor class which we already
+went over with the inputs specified the
+went over with the inputs specified the
+class has only one function update
+class has only one function update
+signal we already saw the loop that uses
+signal we already saw the loop that uses
+it we check if the current index is
+it we check if the current index is
+equal to the next train variable if it
+equal to the next train variable if it
+is we call the train function of the
+is we call the train function of the
+pattern mining class we update the next
+pattern mining class we update the next
+train variable by adding the step size
+train variable by adding the step size
+we keep track of the hold period and
+we keep track of the hold period and
+signal with these two if statements if
+signal with these two if statements if
+the current hold period is above one we
+the current hold period is above one we
+decrement if the whole period is zero we
+decrement if the whole period is zero we
+set the current signal to zero at each
+set the current signal to zero at each
+index we find the current perceptually
+index we find the current perceptually
+important points we pass the Y values of
+important points we pass the Y values of
+the points into the predict function the
+the points into the predict function the
+predict function returns 0 1 or negative
+predict function returns 0 1 or negative
+one if the return value is not 0 we set
+one if the return value is not 0 we set
+the current signal and set the hold
+the current signal and set the hold
+period to the value specified then
+period to the value specified then
+return the current signal here are the
+return the current signal here are the
+out of sample results this is the
+out of sample results this is the
+cumulative log returns from the walk
+cumulative log returns from the walk
+forward code we just saw it is the
+forward code we just saw it is the
+combined performance of both long and
+combined performance of both long and
+short patterns found we can see that the
+short patterns found we can see that the
+patterns found on 2018 and 2019 did very
+patterns found on 2018 and 2019 did very
+well throughout 2020 but the performance
+well throughout 2020 but the performance
+decayed afterward essentially flat
+decayed afterward essentially flat
+assumes the patterns found in Prior data
+assumes the patterns found in Prior data
+did not continue to work into 2021 and
+did not continue to work into 2021 and
+2022 but the performance of 2020 shows
+2022 but the performance of 2020 shows
+this type of strategy has some potential
+this type of strategy has some potential
+what we did in this video is find
+what we did in this video is find
+similar structures in price and attempt
+similar structures in price and attempt
+to build trading patterns from them what
+to build trading patterns from them what
+I showed only scratches the surface of
+I showed only scratches the surface of
+what is possible the code shown should
+what is possible the code shown should
+be viewed more as a toy than a fully
+be viewed more as a toy than a fully
+fledged trading system it has a long way
+fledged trading system it has a long way
+to go the results are not Stellar but I
+to go the results are not Stellar but I
+wanted to show a complete example of
+wanted to show a complete example of
+pattern mining a major issue with this
+pattern mining a major issue with this
+implementation is the clustering is
+implementation is the clustering is
+highly dependent on the the random seed
+highly dependent on the the random seed
+it will return different clusters each
+it will return different clusters each
+run this Randomness is from the
+run this Randomness is from the
+initialization of the Clusters solving
+initialization of the Clusters solving
+for the optimal K means is an MP hard
+for the optimal K means is an MP hard
+problem and what we actually get is only
+problem and what we actually get is only
+a local Optimum also each portion of the
+a local Optimum also each portion of the
+algorithm has plenty of room for
+algorithm has plenty of room for
+improvement we could better represent
+improvement we could better represent
+the patterns we could find a better way
+the patterns we could find a better way
+to Cluster or even skip the Clusters and
+to Cluster or even skip the Clusters and
+do a nearest neighbor approach we could
+do a nearest neighbor approach we could
+also evaluate the patterns differently
+also evaluate the patterns differently
+Beyond a simple hold period but
+Beyond a simple hold period but
+hopefully this video gives you some
+hopefully this video gives you some
+ideas for your own trading and research
+ideas for your own trading and research
+I would like to make more videos on this
+I would like to make more videos on this
+topic in the future there is quite a bit
+topic in the future there is quite a bit
+to be done that's it for this one thank
+to be done that's it for this one thank
+you for watching
+you for watching
